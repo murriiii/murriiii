@@ -72,11 +72,17 @@ currently_building: AI-enhanced Crypto Trading Bot
 ### :chart_with_upwards_trend: GitHub Stats
 
 <p align="center">
-  <img src="https://streak-stats.demolab.com/?user=murriiii&theme=tokyonight&hide_border=true" alt="GitHub Streak"/>
+  <img src="https://raw.githubusercontent.com/murriiii/murriiii/output/profile-summary-card-output/tokyonight/0-profile-details.svg" alt="Profile Details"/>
 </p>
 
 <p align="center">
-  <img src="https://github-readme-activity-graph.vercel.app/graph?username=murriiii&theme=tokyo-night&hide_border=true&area=true" alt="Activity Graph"/>
+  <img src="https://raw.githubusercontent.com/murriiii/murriiii/output/profile-summary-card-output/tokyonight/1-repos-per-language.svg" height="165"/>
+  <img src="https://raw.githubusercontent.com/murriiii/murriiii/output/profile-summary-card-output/tokyonight/2-most-commit-language.svg" height="165"/>
+</p>
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/murriiii/murriiii/output/profile-summary-card-output/tokyonight/3-stats.svg" height="165"/>
+  <img src="https://raw.githubusercontent.com/murriiii/murriiii/output/profile-summary-card-output/tokyonight/4-productive-time.svg" height="165"/>
 </p>
 
 ---
