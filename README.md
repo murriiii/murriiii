@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="https://github.com/murriiii"><img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=28&pause=1000&color=70A5FD&center=true&vCenter=true&random=false&width=600&lines=Hi+%F0%9F%91%8B+I'm+Murat;Mathematician+%26+Developer;AI+%7C+Blockchain+%7C+Quant+Finance" alt="Typing SVG" /></a>
+  <a href="https://github.com/murriiii"><img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=28&pause=1000&color=70A5FD&center=true&vCenter=true&random=false&width=600&lines=Hi+%F0%9F%91%8B+I'm+Murat;Mathematician+%26+Developer;AI+%7C+Blockchain+%7C+Quant+Finance;while+(alive)+%7B+code()+%7D" alt="Typing SVG" /></a>
 </p>
 
 <p align="center">
@@ -7,20 +7,30 @@
   <img src="https://komarev.com/ghpvc/?username=murriiii&style=for-the-badge&color=blue" alt="Profile Views"/>
 </p>
 
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/murriiii/murriiii/output/github-snake-dark.svg"/>
+    <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/murriiii/murriiii/output/github-snake.svg"/>
+    <img alt="Snake animation" src="https://raw.githubusercontent.com/murriiii/murriiii/output/github-snake-dark.svg"/>
+  </picture>
+</p>
+
 ---
 
-```yaml
-name: Murat Ince
-location: Lichtenfels, Germany
-role: Software Developer & Mathematician
-
-interests:
-  - Artificial Intelligence & Machine Learning
-  - Blockchain & DeFi
-  - Quantitative Finance & Algorithmic Trading
-  - SAP Development
-
-currently_building: AI-enhanced Crypto Trading Bot
+```js
+const murat = {
+    location: "Lichtenfels, Germany",
+    role: ["Software Developer", "Mathematician"],
+    code: ["Python", "TypeScript", "Dart", "ABAP", "SQL"],
+    interests: {
+        ai: "Machine Learning & Deep Learning",
+        blockchain: "DeFi & Smart Contracts",
+        finance: "Algorithmic Trading & Quant Models",
+    },
+    currentProject: "AI-enhanced Crypto Trading Bot 🤖📈",
+    funFact: "I mass-produce commits between 18:00 and 00:00 🌙",
+    motto: "In math we trust, in code we verify.",
+};
 ```
 
 ---
@@ -64,14 +74,4 @@ currently_building: AI-enhanced Crypto Trading Bot
 <p align="center">
   <img src="https://raw.githubusercontent.com/murriiii/murriiii/main/profile-summary-card-output/tokyonight/3-stats.svg" height="165"/>
   <img src="https://raw.githubusercontent.com/murriiii/murriiii/main/profile-summary-card-output/tokyonight/4-productive-time.svg" height="165"/>
-</p>
-
----
-
-<p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/murriiii/murriiii/output/github-snake-dark.svg"/>
-    <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/murriiii/murriiii/output/github-snake.svg"/>
-    <img alt="Snake animation" src="https://raw.githubusercontent.com/murriiii/murriiii/output/github-snake-dark.svg"/>
-  </picture>
 </p>
