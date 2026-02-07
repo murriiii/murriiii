@@ -53,17 +53,17 @@ currently_building: AI-enhanced Crypto Trading Bot
 ---
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/murriiii/murriiii/stats/profile-summary-card-output/tokyonight/0-profile-details.svg" alt="Profile Details"/>
+  <img src="https://raw.githubusercontent.com/murriiii/murriiii/main/profile-summary-card-output/tokyonight/0-profile-details.svg" alt="Profile Details"/>
 </p>
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/murriiii/murriiii/stats/profile-summary-card-output/tokyonight/1-repos-per-language.svg" height="165"/>
-  <img src="https://raw.githubusercontent.com/murriiii/murriiii/stats/profile-summary-card-output/tokyonight/2-most-commit-language.svg" height="165"/>
+  <img src="https://raw.githubusercontent.com/murriiii/murriiii/main/profile-summary-card-output/tokyonight/1-repos-per-language.svg" height="165"/>
+  <img src="https://raw.githubusercontent.com/murriiii/murriiii/main/profile-summary-card-output/tokyonight/2-most-commit-language.svg" height="165"/>
 </p>
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/murriiii/murriiii/stats/profile-summary-card-output/tokyonight/3-stats.svg" height="165"/>
-  <img src="https://raw.githubusercontent.com/murriiii/murriiii/stats/profile-summary-card-output/tokyonight/4-productive-time.svg" height="165"/>
+  <img src="https://raw.githubusercontent.com/murriiii/murriiii/main/profile-summary-card-output/tokyonight/3-stats.svg" height="165"/>
+  <img src="https://raw.githubusercontent.com/murriiii/murriiii/main/profile-summary-card-output/tokyonight/4-productive-time.svg" height="165"/>
 </p>
 
 ---
