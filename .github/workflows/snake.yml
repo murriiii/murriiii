@@ -6,22 +6,12 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  stats:
     runs-on: ubuntu-latest
     permissions:
       contents: write
     steps:
       - uses: actions/checkout@v4
-
-      - uses: Platane/snk@v3
-        with:
-          github_user_name: ${{ github.repository_owner }}
-          outputs: |
-            dist/github-snake.svg
-            dist/github-snake-dark.svg?palette=github-dark
-        env:
-          GITHUB_TOKEN: ${{ secrets.USER_TOKEN }}
-
       - uses: vn7n24fzkq/github-profile-summary-cards@release
         with:
           USERNAME: ${{ github.repository_owner }}
@@ -30,14 +20,30 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.USER_TOKEN }}
 
-      - name: Copy snake SVGs into summary cards output
-        run: |
-          cp dist/github-snake.svg profile-summary-card-output/ 2>/dev/null || true
-          cp dist/github-snake-dark.svg profile-summary-card-output/ 2>/dev/null || true
-
-      - uses: crazy-max/ghaction-github-pages@v4
+  snake:
+    needs: stats
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
         with:
-          target_branch: output
-          build_dir: profile-summary-card-output
+          ref: output
+
+      - uses: Platane/snk@v3
+        id: snk
+        with:
+          github_user_name: ${{ github.repository_owner }}
+          outputs: |
+            github-snake.svg
+            github-snake-dark.svg?palette=github-dark
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.USER_TOKEN }}
+
+      - name: Push snake to output branch
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add github-snake.svg github-snake-dark.svg
+          git commit -m "Update snake animation" || true
+          git push origin output
