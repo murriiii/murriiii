@@ -6,11 +6,13 @@ on:
   workflow_dispatch:
 
 jobs:
-  snake:
+  build:
     runs-on: ubuntu-latest
     permissions:
       contents: write
     steps:
+      - uses: actions/checkout@v4
+
       - uses: Platane/snk@v3
         with:
           github_user_name: ${{ github.repository_owner }}
@@ -20,19 +22,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.USER_TOKEN }}
 
-      - uses: crazy-max/ghaction-github-pages@v4
-        with:
-          target_branch: output
-          build_dir: dist
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-  stats:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-    steps:
-      - uses: actions/checkout@v4
       - uses: vn7n24fzkq/github-profile-summary-cards@release
         with:
           USERNAME: ${{ github.repository_owner }}
@@ -40,3 +29,15 @@ jobs:
           UTC_OFFSET: 1
         env:
           GITHUB_TOKEN: ${{ secrets.USER_TOKEN }}
+
+      - name: Copy snake SVGs into summary cards output
+        run: |
+          cp dist/github-snake.svg profile-summary-card-output/ 2>/dev/null || true
+          cp dist/github-snake-dark.svg profile-summary-card-output/ 2>/dev/null || true
+
+      - uses: crazy-max/ghaction-github-pages@v4
+        with:
+          target_branch: output
+          build_dir: profile-summary-card-output
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
