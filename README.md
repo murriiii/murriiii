@@ -4,6 +4,7 @@
 
 <p align="center">
   <a href="https://github.com/murriiii"><img src="https://img.shields.io/badge/-GitHub-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub"/></a>
+  <a href="https://www.linkedin.com/in/muratince89"><img src="https://img.shields.io/badge/-LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn"/></a>
   <img src="https://komarev.com/ghpvc/?username=murriiii&style=for-the-badge&color=blue" alt="Profile Views"/>
 </p>
 
@@ -21,11 +22,14 @@
 const murat = {
     location: "Lichtenfels, Germany",
     role: ["Software Developer", "Mathematician"],
-    code: ["Python", "TypeScript", "Dart", "ABAP", "SQL"],
+    education: "B.Sc. Informatik @ Hochschule Coburg",
+    code: ["Python", "TypeScript", "Dart", "ABAP", "SQL", "VBA"],
+    sap: ["SAPUI5", "Fiori Elements", "CDS", "RAP", "S/4HANA"],
     interests: {
         ai: "Machine Learning & Deep Learning",
         blockchain: "DeFi & Smart Contracts",
         finance: "Algorithmic Trading & Quant Models",
+        sap: "Clean ABAP & Fiori Development",
     },
     currentProject: "AI-enhanced Crypto Trading Bot 🤖📈",
     funFact: "I mass-produce commits between 18:00 and 00:00 🌙",
@@ -43,6 +47,22 @@ const murat = {
   <img src="https://img.shields.io/badge/-Dart-0175C2?style=for-the-badge&logo=dart&logoColor=white"/>
   <img src="https://img.shields.io/badge/-ABAP-0FAAFF?style=for-the-badge&logo=sap&logoColor=white"/>
   <img src="https://img.shields.io/badge/-SQL-4479A1?style=for-the-badge&logo=postgresql&logoColor=white"/>
+  <img src="https://img.shields.io/badge/-VBA-217346?style=for-the-badge&logo=microsoftexcel&logoColor=white"/>
+</p>
+
+#### `> sap & enterprise`
+<p align="center">
+  <img src="https://img.shields.io/badge/-SAPUI5-0FAAFF?style=for-the-badge&logo=sap&logoColor=white"/>
+  <img src="https://img.shields.io/badge/-Fiori_Elements-0FAAFF?style=for-the-badge&logo=sap&logoColor=white"/>
+  <img src="https://img.shields.io/badge/-S%2F4HANA-0FAAFF?style=for-the-badge&logo=sap&logoColor=white"/>
+  <img src="https://img.shields.io/badge/-CDS-0FAAFF?style=for-the-badge&logo=sap&logoColor=white"/>
+  <img src="https://img.shields.io/badge/-RAP-0FAAFF?style=for-the-badge&logo=sap&logoColor=white"/>
+</p>
+
+#### `> frameworks & mobile`
+<p align="center">
+  <img src="https://img.shields.io/badge/-Flutter-02569B?style=for-the-badge&logo=flutter&logoColor=white"/>
+  <img src="https://img.shields.io/badge/-Hono-E36002?style=for-the-badge&logo=hono&logoColor=white"/>
 </p>
 
 #### `> ml & data science`
