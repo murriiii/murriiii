@@ -87,4 +87,15 @@ const murat = {
 #### `> after hours`
 
 <!---LOL-STATS-START-HERE--->
+<h3 align='center'> Data from Last 10 Matches for ムラット#2349</h3><table align='center'><tr></tr>
+<tr align='left'><th><pre>Top 4 Recently Played Champions
+-------------------------
+<img src='readme-lol-items/loading_Urgot.gif' alt='drawing' width='400'/>
+<img src='readme-lol-items/loading_Amumu.gif' alt='drawing' width='400'/>
+<img src='readme-lol-items/loading_Teemo.gif' alt='drawing' width='400'/>
+<img src='readme-lol-items/loading_Malphite.gif' alt='drawing' width='400'/>
+-------------------------
+<img align='center' src='readme-lol-items/extra_info.gif' alt='drawing' width='350'/></pre></th><th><pre>Top 3 Champion Masteries
+------------------------
+<img align='center' src='readme-lol-items/mastery.gif' alt='drawing' width='320'/> </pre></th></tr></table>
 <!---LOL-STATS-END-HERE--->
