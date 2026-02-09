@@ -63,24 +63,25 @@ def copy_file_contents_to_destination(target_file, source_file):
     # Open the the actual destination
     final_file_lines = open(target_file, encoding='utf-8').readlines()
     readme_lol_stats_file = open(source_file, encoding='utf-8').readlines()
-    # Parse target file to see where to put widget
-    final_output = []
-    start_pos = 0
-    end_pos = 0
+    # Parse target file to see where to put widget (use FIRST markers only)
+    start_pos = -1
+    end_pos = -1
     for pos, line in enumerate(final_file_lines):
-        if line == "<!---LOL-STATS-START-HERE--->\n":
+        if "<!---LOL-STATS-START-HERE--->" in line and start_pos == -1:
             start_pos = pos
-        elif line == "<!---LOL-STATS-END-HERE--->\n":
+        elif "<!---LOL-STATS-END-HERE--->" in line and end_pos == -1:
             end_pos = pos
+    if start_pos == -1 or end_pos == -1:
+        print("WARNING: Could not find LOL-STATS markers in README")
+        return
     # Format everything
     start = final_file_lines[:start_pos+1]
     end = final_file_lines[end_pos:]
     start.extend(readme_lol_stats_file)
     start.extend(end)
-    final_output = start
     # Write to target file
     with open(target_file, "w", encoding="utf-8") as f:
-        for line in final_output:
+        for line in start:
             f.write(line)
 
 
@@ -91,7 +92,7 @@ def last_played_champ_squares(list_of_champs):
     result = ""
     for champ in list_of_champs:
         shutil.copyfile(f'square_champs/{champ}.png', f"../readme-lol-items/{champ}.png")
-        result = f"{result}<img src='../readme-lol-items/{champ}.png' alt='drawing' width='20'/>  "
+        result = f"{result}<img src='readme-lol-items/{champ}.png' alt='drawing' width='20'/>  "
     return result
 
 
@@ -122,13 +123,13 @@ def create_played_and_recent_widget(target_file, temp_file, config, global_data,
         
         for champ in main_widget_info['Most Played']:
             shutil.copyfile(f'square_champs/{champ}.png', f"../readme-lol-items/{champ}.png")
-            '''f.write(f"<img src='../readme-lol-items/{champ}.png' alt='drawing' width='20'/>" 
+            '''f.write(f"<img src='readme-lol-items/{champ}.png' alt='drawing' width='20'/>" 
             + f" {champ}".ljust(dd.get_longest_name() + 4, " ") 
-            + f"<img src='../readme-lol-items/{champ}_loading.gif' alt='drawing' width='170'/>"
+            + f"<img src='readme-lol-items/{champ}_loading.gif' alt='drawing' width='170'/>"
             + f"{round(main_widget_info['Percentages'][champ], 2): .2f}%\n".rjust(9, " "))'''
             image_location = f'../readme-lol-items/{champ}.png'
             ig.create_animated_loading_bar(image_location, champ, main_widget_info['Percentages'][champ], f"../readme-lol-items/loading_{champ}.gif")
-            f.write(f"<img src='../readme-lol-items/loading_{champ}.gif' alt='drawing' width='400'/>\n")
+            f.write(f"<img src='readme-lol-items/loading_{champ}.gif' alt='drawing' width='400'/>\n")
         
         
         f.write(f"-------------------------\n")
@@ -187,7 +188,7 @@ def create_played_and_recent_widget(target_file, temp_file, config, global_data,
 
 
         ig.create_extra_info(list_of_messages, "../readme-lol-items/extra_info.gif")
-        f.write(f"<img align='center' src='../readme-lol-items/extra_info.gif' alt='drawing' width='350'/>")
+        f.write(f"<img align='center' src='readme-lol-items/extra_info.gif' alt='drawing' width='350'/>")
         f.write("</pre></th>")
         # End main section
 
@@ -202,14 +203,14 @@ def create_played_and_recent_widget(target_file, temp_file, config, global_data,
             ig.create_mastery_gif(f'loading_images/{images[0][1]}.png', 
             f'loading_images/{images[1][1]}.png', f'loading_images/{images[2][1]}.png', 
             f'{images[0][0]}: {images[0][2]}', f'{images[1][0]}: {images[1][2]}', f'{images[2][0]}: {images[2][2]}', '../readme-lol-items/mastery.gif')
-            f.write(f"<img align='center' src='../readme-lol-items/mastery.gif' alt='drawing' width='320'/> ")
+            f.write(f"<img align='center' src='readme-lol-items/mastery.gif' alt='drawing' width='320'/> ")
 
             # '''
             # NO GIF CODE
             # '''
             # for champ in mastery_widget_info['Top Three Data']:
             #     shutil.copyfile(f'loading_images/{champ[1]}.png', f'../readme-lol-items/{champ[1]}.png')
-            #     f.write(f"<img align='center' src='../readme-lol-items/{champ[1]}.png' alt='drawing' width='50'/> ")
+            #     f.write(f"<img align='center' src='readme-lol-items/{champ[1]}.png' alt='drawing' width='50'/> ")
             #     f.write(f"{champ[0]}: {champ[2]} \n")
             
 
