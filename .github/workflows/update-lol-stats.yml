@@ -24,8 +24,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Install dependencies
-        run: pip install Pillow requests python-dotenv numpy imageio psycopg2-binary
+      - name: Setup venv and install dependencies
+        run: |
+          python -m venv .venv
+          .venv/bin/pip install Pillow requests python-dotenv numpy imageio psycopg2-binary
 
       - name: Update LoL stats
         env:
@@ -40,9 +42,9 @@ jobs:
         working-directory: scripts
         run: |
           if [ "$DATA_SOURCE" = "db" ]; then
-            python lol_main.py --from-db
+            ../.venv/bin/python lol_main.py --from-db
           else
-            python lol_main.py
+            ../.venv/bin/python lol_main.py
           fi
 
       - name: Commit and push

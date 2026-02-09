@@ -23,8 +23,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Install dependencies
-        run: pip install requests python-dotenv psycopg2-binary
+      - name: Setup venv and install dependencies
+        run: |
+          python -m venv .venv
+          .venv/bin/pip install requests python-dotenv psycopg2-binary
 
       - name: Run collector
         env:
@@ -37,4 +39,4 @@ jobs:
           DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
           COLLECT_MODE: ${{ inputs.mode || 'all' }}
         working-directory: scripts
-        run: python lol_collector.py "$COLLECT_MODE"
+        run: ../.venv/bin/python lol_collector.py "$COLLECT_MODE"
