@@ -7,14 +7,6 @@
   <img src="https://komarev.com/ghpvc/?username=murriiii&style=for-the-badge&color=blue" alt="Profile Views"/>
 </p>
 
-<p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/murriiii/murriiii/output/github-snake-dark.svg"/>
-    <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/murriiii/murriiii/output/github-snake.svg"/>
-    <img alt="Snake animation" src="https://raw.githubusercontent.com/murriiii/murriiii/output/github-snake-dark.svg"/>
-  </picture>
-</p>
-
 ---
 
 ```js
@@ -84,26 +76,20 @@ const murat = {
 
 ---
 
-<p align="center">
-  <img src="https://streak-stats.demolab.com?user=murriiii&theme=tokyonight&hide_border=true&date_format=j%20M%5B%20Y%5D" alt="GitHub Streak"/>
-</p>
+#### `> after hours`
 
 <p align="center">
-  <img src="https://github-trophies.vercel.app/?username=murriiii&theme=tokyonight&no-frame=true&column=4&margin-w=15&margin-h=15" alt="GitHub Trophies"/>
+  <img src="https://img.shields.io/badge/League_of_Legends-Silver_3-6c757d?style=for-the-badge&logo=riotgames&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Teemo_Main-1.2M_Mastery-8B5CF6?style=for-the-badge"/>
+  <img src="https://img.shields.io/badge/ムラット%232349-EUW-C89B3C?style=for-the-badge&logo=riotgames&logoColor=white"/>
 </p>
 
 ---
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/murriiii/murriiii/main/profile-summary-card-output/tokyonight/0-profile-details.svg" alt="Profile Details"/>
-</p>
-
-<p align="center">
-  <img src="https://raw.githubusercontent.com/murriiii/murriiii/main/profile-summary-card-output/tokyonight/1-repos-per-language.svg" height="165"/>
-  <img src="https://raw.githubusercontent.com/murriiii/murriiii/main/profile-summary-card-output/tokyonight/2-most-commit-language.svg" height="165"/>
-</p>
-
-<p align="center">
-  <img src="https://raw.githubusercontent.com/murriiii/murriiii/main/profile-summary-card-output/tokyonight/3-stats.svg" height="165"/>
-  <img src="https://raw.githubusercontent.com/murriiii/murriiii/main/profile-summary-card-output/tokyonight/4-productive-time.svg" height="165"/>
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/murriiii/murriiii/output/github-snake-dark.svg"/>
+    <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/murriiii/murriiii/output/github-snake.svg"/>
+    <img alt="Snake animation" src="https://raw.githubusercontent.com/murriiii/murriiii/output/github-snake-dark.svg"/>
+  </picture>
 </p>
