@@ -70,12 +70,15 @@ const murat = {
 <img src="https://img.shields.io/badge/-Redis-DC382D?style=flat-square&logo=redis&logoColor=white"/>
 <img src="https://img.shields.io/badge/-Cloudflare-F38020?style=flat-square&logo=cloudflare&logoColor=white"/>
 </td></tr>
+<tr><td align="center"><b>Frameworks</b></td>
+<td>
+<img src="https://img.shields.io/badge/-Flutter-02569B?style=flat-square&logo=flutter&logoColor=white"/>
+<img src="https://img.shields.io/badge/-Hono-E36002?style=flat-square&logo=hono&logoColor=white"/>
+</td></tr>
 <tr><td align="center"><b>Web3</b></td>
 <td>
 <img src="https://img.shields.io/badge/-Ethereum-3C3C3D?style=flat-square&logo=ethereum&logoColor=white"/>
 <img src="https://img.shields.io/badge/-Binance-F0B90B?style=flat-square&logo=binance&logoColor=black"/>
-<img src="https://img.shields.io/badge/-Flutter-02569B?style=flat-square&logo=flutter&logoColor=white"/>
-<img src="https://img.shields.io/badge/-Hono-E36002?style=flat-square&logo=hono&logoColor=white"/>
 </td></tr>
 </table>
 
