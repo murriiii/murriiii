@@ -87,19 +87,21 @@ const murat = {
 #### `> after hours`
 
 <!---LOL-STATS-START-HERE--->
-<h3 align='center'>ich weiß ich bin ein noob, aber auch ein noob hat ein stolz :D - ムラット#2349</h3><table align='center'><tr></tr>
-<tr align='left'><th><pre>Top 4 Recently Played Champions
+<h3 align='center'>i know i'm a noob, but even a noob has pride :D - ムラット#2349</h3><table align='center'><tr></tr>
+<tr align='left'><th><pre>Lane Distribution (Last 100 Games)
 -------------------------
-<img src='readme-lol-items/loading_Urgot.gif' alt='drawing' width='400'/>
-<img src='readme-lol-items/loading_Amumu.gif' alt='drawing' width='400'/>
-<img src='readme-lol-items/loading_Teemo.gif' alt='drawing' width='400'/>
-<img src='readme-lol-items/loading_Malphite.gif' alt='drawing' width='400'/>
+<img src='readme-lol-items/loading_Top.gif' alt='drawing' width='400'/>
+<img src='readme-lol-items/loading_Jungle.gif' alt='drawing' width='400'/>
+<img src='readme-lol-items/loading_Mid.gif' alt='drawing' width='400'/>
+<img src='readme-lol-items/loading_Bot.gif' alt='drawing' width='400'/>
+<img src='readme-lol-items/loading_ARAM.gif' alt='drawing' width='400'/>
 -------------------------
 <img align='center' src='readme-lol-items/extra_info.gif' alt='drawing' width='350'/></pre></th><th><pre>Top 3 Champion Masteries
 ------------------------
 <img align='center' src='readme-lol-items/mastery.gif' alt='drawing' width='320'/> </pre></th></tr></table>
 
-<h4 align='center'>Recent Matches</h4>
+<details>
+<summary><h4 align='center'>Recent Matches</h4></summary>
 <table align='center'>
 <tr><th></th><th>Champion</th><th>K/D/A</th><th>KDA</th><th>CS</th><th>Result</th></tr>
 <tr><td><img src='https://ddragon.leagueoflegends.com/cdn/16.3.1/img/champion/Urgot.png' width='28'/></td><td><b>Urgot</b></td><td align='center'>8/4/1</td><td align='center'>2.2</td><td align='center'>171</td><td align='center'><img src='https://img.shields.io/badge/WIN-27AE60?style=flat-square'/></td></tr>
@@ -113,4 +115,5 @@ const murat = {
 <tr><td><img src='https://ddragon.leagueoflegends.com/cdn/16.3.1/img/champion/Amumu.png' width='28'/></td><td><b>Amumu</b></td><td align='center'>6/3/5</td><td align='center'>3.7</td><td align='center'>135</td><td align='center'><img src='https://img.shields.io/badge/WIN-27AE60?style=flat-square'/></td></tr>
 <tr><td><img src='https://ddragon.leagueoflegends.com/cdn/16.3.1/img/champion/Amumu.png' width='28'/></td><td><b>Amumu</b></td><td align='center'>7/9/18</td><td align='center'>2.8</td><td align='center'>211</td><td align='center'><img src='https://img.shields.io/badge/WIN-27AE60?style=flat-square'/></td></tr>
 </table>
+</details>
 <!---LOL-STATS-END-HERE--->
