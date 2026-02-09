@@ -1,0 +1,21 @@
+{
+    "Summoner Name": "ムラット#2349",
+    "Platform Routing Region Code": "euw1",
+    "Regional Routing Name": "europe",
+    "Matches": 10,
+    "Target File": "README.md",
+    "Toggle Credit": false,
+    "Skin Substitutions": {},
+    "Extra Info": {
+        "Display Rank": true,
+        "Main Lane": true,
+        "K/D/A": true,
+        "Mastery": true,
+        "Solokills": true,
+        "Takedowns": true,
+        "Pentakills": true,
+        "Quadrakills": true,
+        "Triplekills": true,
+        "Doublekills": true
+    }
+}

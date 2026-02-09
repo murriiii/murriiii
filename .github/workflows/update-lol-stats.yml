@@ -20,15 +20,20 @@ jobs:
         with:
           python-version: '3.12'
 
+      - name: Install dependencies
+        run: pip install Pillow requests python-dotenv numpy imageio
+
       - name: Update LoL stats
         env:
+          API_KEY: ${{ secrets.API_KEY }}
           RIOT_API_KEY: ${{ secrets.API_KEY }}
-        run: python scripts/update_lol_stats.py
+        working-directory: scripts
+        run: python lol_main.py
 
       - name: Commit and push
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git add README.md
+          git add -A
           git diff-index --quiet HEAD || git commit -m "Update LoL stats"
           git push
