@@ -381,7 +381,7 @@ def get_main_section_data(region_name, puuid, api_key, extra_data, list_of_match
         doublekills += participant["doubleKills"]
 
         if was_fetched:
-            time.sleep(1)
+            time.sleep(1.5)
 
     print(f"Matches: {len(list_of_matches)} total, {cached_count} from cache, {len(list_of_matches) - cached_count} fetched")
 
