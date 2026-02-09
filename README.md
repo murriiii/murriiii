@@ -86,5 +86,12 @@ const murat = {
 
 #### `> after hours`
 
-<!--LOL-STATS-START-HERE--->
-<!--LOL-STATS-END-HERE--->
+<table align="center">
+<tr>
+<td align="center"><b>ムラット#2349</b><br/>Level 977 · EUW<br/><br/><img src="https://img.shields.io/badge/Solo%2FDuo-Silver_3-6c757d?style=flat-square&logo=riotgames&logoColor=white"/><br/><img src="https://img.shields.io/badge/Flex-Bronze_2-CD7F32?style=flat-square&logo=riotgames&logoColor=white"/></td>
+<td align="center"><img src="https://ddragon.leagueoflegends.com/cdn/15.3.1/img/champion/Teemo.png" width="48"/><br/><b>Teemo</b><br/><sub>1.2M Mastery</sub></td>
+<td align="center"><img src="https://ddragon.leagueoflegends.com/cdn/15.3.1/img/champion/Yorick.png" width="48"/><br/><b>Yorick</b><br/><sub>680K Mastery</sub></td>
+<td align="center"><img src="https://ddragon.leagueoflegends.com/cdn/15.3.1/img/champion/Pantheon.png" width="48"/><br/><b>Pantheon</b><br/><sub>405K Mastery</sub></td>
+<td align="center"><img src="https://ddragon.leagueoflegends.com/cdn/15.3.1/img/champion/Amumu.png" width="48"/><br/><b>Amumu</b><br/><sub>420K Mastery</sub></td>
+</tr>
+</table>
