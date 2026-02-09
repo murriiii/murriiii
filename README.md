@@ -7,6 +7,14 @@
   <img src="https://komarev.com/ghpvc/?username=murriiii&style=for-the-badge&color=blue" alt="Profile Views"/>
 </p>
 
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/murriiii/murriiii/output/github-snake-dark.svg"/>
+    <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/murriiii/murriiii/output/github-snake.svg"/>
+    <img alt="Snake animation" src="https://raw.githubusercontent.com/murriiii/murriiii/output/github-snake-dark.svg"/>
+  </picture>
+</p>
+
 ---
 
 ```js
@@ -78,18 +86,5 @@ const murat = {
 
 #### `> after hours`
 
-<p align="center">
-  <img src="https://img.shields.io/badge/League_of_Legends-Silver_3-6c757d?style=for-the-badge&logo=riotgames&logoColor=white"/>
-  <img src="https://img.shields.io/badge/Teemo_Main-1.2M_Mastery-8B5CF6?style=for-the-badge"/>
-  <img src="https://img.shields.io/badge/ムラット%232349-EUW-C89B3C?style=for-the-badge&logo=riotgames&logoColor=white"/>
-</p>
-
----
-
-<p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/murriiii/murriiii/output/github-snake-dark.svg"/>
-    <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/murriiii/murriiii/output/github-snake.svg"/>
-    <img alt="Snake animation" src="https://raw.githubusercontent.com/murriiii/murriiii/output/github-snake-dark.svg"/>
-  </picture>
-</p>
+<!--LOL-STATS-START-HERE--->
+<!--LOL-STATS-END-HERE--->
