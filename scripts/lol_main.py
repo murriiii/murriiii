@@ -1,5 +1,6 @@
 from dotenv import load_dotenv
 import os
+import sys
 import json
 import pathlib
 from collections import Counter
@@ -462,76 +463,181 @@ def get_mastery_section_data(region_code, puuid, api_key):
 
 
 
+def get_data_from_db(config):
+    """Read all match/mastery/summoner data from PostgreSQL. Zero API calls."""
+    import psycopg2
+
+    conn = psycopg2.connect(
+        host=os.getenv("DB_HOST", "localhost"),
+        port=os.getenv("DB_PORT", "5432"),
+        dbname=os.getenv("DB_NAME", "lol_stats"),
+        user=os.getenv("DB_USER", "postgres"),
+        password=os.getenv("DB_PASSWORD", ""),
+    )
+
+    total_matches = config.get("Matches", 100)
+
+    with conn.cursor() as cur:
+        # Get summoner info
+        cur.execute("SELECT tier FROM lol_summoner LIMIT 1")
+        row = cur.fetchone()
+        rank_tier = row[0] if row else "Unranked"
+
+        # Get last N matches
+        cur.execute("""
+            SELECT champion_name, kills, deaths, assists, win,
+                   total_minions_killed, neutral_minions_killed, position,
+                   time_ccing_others, ability_uses, solo_kills, takedowns,
+                   penta_kills, quadra_kills, triple_kills, double_kills
+            FROM lol_matches ORDER BY game_start_ts DESC LIMIT %s
+        """, (total_matches,))
+        matches = cur.fetchall()
+
+        # Get top 3 masteries
+        cur.execute("""
+            SELECT champion_name, champion_id, champion_points
+            FROM lol_mastery ORDER BY champion_points DESC LIMIT 3
+        """)
+        masteries = cur.fetchall()
+
+    conn.close()
+
+    # Build the same data structures as the API-based functions
+    extra_data = {"Rank": rank_tier}
+    last_champs = []
+    played_positions = []
+    match_details = []
+    time_ccing = ability_usage = solo_kills = take_downs = 0
+    global_kills = global_deaths = global_assists = 0
+    pentakills = quadrakills = triplekills = doublekills = 0
+
+    for m in matches:
+        champ, k, d, a, win, minions, neutrals, pos, cc, abilities, solos, td, penta, quadra, triple, double = m
+        last_champs.append(champ)
+        match_details.append({"champion": champ, "kills": k, "deaths": d, "assists": a, "win": win, "cs": minions + neutrals})
+        played_positions.append(pos)
+        time_ccing += cc
+        ability_usage += abilities
+        solo_kills += solos
+        take_downs += td
+        global_kills += k
+        global_deaths += d
+        global_assists += a
+        pentakills += penta
+        quadrakills += quadra
+        triplekills += triple
+        doublekills += double
+
+    extra_data["Takedowns"] = take_downs
+    extra_data["Solokills"] = solo_kills
+    extra_data["Ability Count"] = ability_usage
+    if played_positions:
+        extra_data["Most Played Position"] = max(set(played_positions), key=played_positions.count)
+        if extra_data["Most Played Position"] == "Invalid":
+            extra_data["Most Played Position"] = "ARAM"
+    else:
+        extra_data["Most Played Position"] = "N/A"
+    extra_data["Seconds of CC"] = time_ccing
+    extra_data["Kills"] = global_kills
+    extra_data["Deaths"] = global_deaths
+    extra_data["Assists"] = global_assists
+    extra_data["Pentakills"] = pentakills
+    extra_data["Quadrakills"] = quadrakills
+    extra_data["Triplekills"] = triplekills
+    extra_data["Doublekills"] = doublekills
+    extra_data["Last Played Champs"] = last_champs
+    extra_data["Match Details"] = match_details
+
+    # Lane distribution
+    lane_names = {"TOP": "Top", "JUNGLE": "Jungle", "MIDDLE": "Mid", "BOTTOM": "Bot", "UTILITY": "Support", "Invalid": "ARAM"}
+    lane_counts = Counter(played_positions)
+    total_games = len(played_positions)
+    lane_percentages = {}
+    for pos, count in lane_counts.items():
+        display_name = lane_names.get(pos, pos)
+        lane_percentages[display_name] = (count / total_games) * 100 if total_games else 0
+    extra_data["Lane Distribution"] = lane_percentages
+
+    total_length = len(last_champs)
+    played_percentage = Counter(last_champs)
+    for key_counts in played_percentage:
+        played_percentage[key_counts] = (played_percentage[key_counts] / total_length) * 100 if total_length else 0
+    recent_most_played = sorted(played_percentage, key=played_percentage.get, reverse=True)[:5]
+
+    main_widget_info = {"Most Played": recent_most_played, "Percentages": played_percentage, "Extra": extra_data}
+
+    # Mastery info - download loading images
+    os.makedirs("loading_images", exist_ok=True)
+    mastery_info = []
+    for champ_name, champ_id, points in masteries:
+        loading_title = dd.get_loading_image(champ_name, "loading_images")
+        mastery_info.append([champ_name, loading_title, points])
+    mastery_widget_info = {"Top Three Data": mastery_info}
+
+    global_data = {"Total Matches": len(matches)}
+    print(f"DB: loaded {len(matches)} matches, rank={rank_tier}, top mastery={masteries[0][0] if masteries else 'N/A'}")
+
+    return global_data, main_widget_info, mastery_widget_info
+
+
 def main():
     logging.basicConfig()
     logging.basicConfig(format='%(message)s')
     log = logging.getLogger(__name__)
+    key = None
     try:
         # Ensure required directories exist
         os.makedirs("loading_images", exist_ok=True)
         os.makedirs("square_champs", exist_ok=True)
         os.makedirs("../readme-lol-items", exist_ok=True)
 
-        test = os.listdir("../readme-lol-items")
-        for item in test:
+        for item in os.listdir("../readme-lol-items"):
             if item.endswith(".png") or item.endswith(".gif"):
                 os.remove(os.path.join("../readme-lol-items", item))
-
-
-
-        items_dir = os.listdir("../readme-lol-items")
-        for item in items_dir:
-            if item.endswith(".png") or item.endswith(".gif"):
-                os.remove(os.path.join("../readme-lol-items", item))
-
 
         load_dotenv()
-        total_matches_to_look = 10
-
-        cache = load_cache()
-        print(f"Cache loaded: {len(cache['matches'])} matches cached")
-
-        key = os.getenv("API_KEY") or os.getenv("RIOT_API_KEY")
         config = json.load(open("../readme-lol-items/config.json"))
+        use_db = "--from-db" in sys.argv
 
-        extra_data = {}
-        if "Matches" in config: total_matches_to_look = max(1, min(abs(config["Matches"]), 100))
+        if use_db:
+            print("Reading data from PostgreSQL...")
+            global_data, main_widget_info, mastery_widget_info = get_data_from_db(config)
+        else:
+            print("Reading data from Riot API...")
+            key = os.getenv("API_KEY") or os.getenv("RIOT_API_KEY")
+            total_matches_to_look = max(1, min(abs(config.get("Matches", 10)), 100))
 
+            cache = load_cache()
+            print(f"Cache loaded: {len(cache['matches'])} matches cached")
 
-        name = config["Summoner Name"]
-        region_code = config["Platform Routing Region Code"]
-        region_name = config["Regional Routing Name"]
-        _id, puuid = rf.get_summoner_identifiers(region_code, name, key, region_name)
-        rank_data = rf.get_summoner_rank(region_code, puuid, key)
-        extra_data["Rank"] = rank_data["tier"]
-        global_data = {"Total Matches":  total_matches_to_look}
+            name = config["Summoner Name"]
+            region_code = config["Platform Routing Region Code"]
+            region_name = config["Regional Routing Name"]
+            _id, puuid = rf.get_summoner_identifiers(region_code, name, key, region_name)
+            rank_data = rf.get_summoner_rank(region_code, puuid, key)
 
+            extra_data = {"Rank": rank_data["tier"]}
+            global_data = {"Total Matches": total_matches_to_look}
 
-        # Get list of matches for the given user
-        matches = rf.get_summoners_matches(region_name, puuid, key, 0, total_matches_to_look)
+            matches = rf.get_summoners_matches(region_name, puuid, key, 0, total_matches_to_look)
+            main_widget_info = get_main_section_data(region_name, puuid, key, extra_data, matches, cache)
+            mastery_widget_info = get_mastery_section_data(region_code, puuid, key)
 
-
-        # Returns the extra_data and a reverse list of the recently played champions
-        main_widget_info = get_main_section_data(region_name, puuid, key, extra_data, matches, cache)
-        # Get Mastery Info
-        mastery_widget_info = get_mastery_section_data(region_code, puuid, key)
-
-        save_cache(cache)
-        print(f"Cache saved: {len(cache['matches'])} matches cached")
-
+            save_cache(cache)
+            print(f"Cache saved: {len(cache['matches'])} matches cached")
 
         target_file = "../" + config["Target File"]
         temp_file = "readme_lol_stats.md"
         create_played_and_recent_widget(target_file, temp_file, config, global_data, main_widget_info, mastery_widget_info)
         print("Finished")
-    
+
     except FileNotFoundError as e:
         log.warning('File not found. Ensure correct directory structure and files exist.')
         log.warning(e)
     except rf.RiotApiBadRequest as e:
-        log.warning(f'{wipe_api_key(str(e), key)}')
+        log.warning(f'{wipe_api_key(str(e), key or "")}')
     except Exception as e:
-        log.warning(f'{wipe_api_key(str(e), key)}')
+        log.warning(f'{e}')
 
 
 if __name__ == "__main__":
