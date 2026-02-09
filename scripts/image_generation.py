@@ -107,6 +107,37 @@ def create_extra_info(list_of_messages, save_location):
                 save_all=True, append_images=images[1:], optimize=True, duration=4000, loop=0, disposal=2)
 
 
+def create_lane_loading_bar(lane_name, percentage, save_location):
+    bars = int((percentage / 100) * 25)
+    out = "|"
+    for x in range(25):
+        out = out + "-"
+    out = out + "|"
+    current_pos = 1
+
+    images = []
+    background_colour = GH_BG_COLOUR
+    width = 120 * 30
+    padded_name = lane_name.ljust(10)
+    bar_start = 10 * 70
+
+    for bar in range(max(bars, 1)):
+        im = Image.new('RGBA', (width, 120), background_colour)
+        image_editable = ImageDraw.Draw(im)
+        font = ImageFont.truetype("CONSOLAB.TTF", size=120)
+
+        image_editable.text((0, 0), padded_name, fill=(255, 255, 255), font=font)
+        image_editable.text((bar_start, 0), out, fill=(255, 255, 255), font=font)
+        image_editable.text((bar_start + (120 * 15), 0), f"{round(percentage, 1):.1f}%", fill=(255, 255, 255), font=font)
+
+        images.append(im)
+        out = out[:current_pos] + "█" + out[current_pos + 1:]
+        current_pos += 1
+
+    images[0].save(save_location,
+                save_all=True, append_images=images[1:], optimize=True, duration=50, disposal=2)
+
+
 def create_animated_loading_bar(champ_image, champ, percentage, save_location):
     bars = int((percentage / 100) * 25)
     out = "|"

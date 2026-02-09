@@ -118,20 +118,18 @@ def create_played_and_recent_widget(target_file, temp_file, config, global_data,
     with open(temp_file, "w", encoding="utf-8") as f:
         f.write(f"<h3 align='center'>ich wei\u00df ich bin ein noob, aber auch ein noob hat ein stolz :D - {config['Summoner Name']}</h3>")
         f.write(f"<table align='center'><tr></tr>\n")
-        f.write(f"<tr align='left'><th><pre>Top {len(main_widget_info['Most Played'])} Recently Played Champions\n-------------------------\n")
-        
-        
-        for champ in main_widget_info['Most Played']:
-            shutil.copyfile(f'square_champs/{champ}.png', f"../readme-lol-items/{champ}.png")
-            '''f.write(f"<img src='readme-lol-items/{champ}.png' alt='drawing' width='20'/>" 
-            + f" {champ}".ljust(dd.get_longest_name() + 4, " ") 
-            + f"<img src='readme-lol-items/{champ}_loading.gif' alt='drawing' width='170'/>"
-            + f"{round(main_widget_info['Percentages'][champ], 2): .2f}%\n".rjust(9, " "))'''
-            image_location = f'../readme-lol-items/{champ}.png'
-            ig.create_animated_loading_bar(image_location, champ, main_widget_info['Percentages'][champ], f"../readme-lol-items/loading_{champ}.gif")
-            f.write(f"<img src='readme-lol-items/loading_{champ}.gif' alt='drawing' width='400'/>\n")
-        
-        
+
+        # Lane Distribution (left side)
+        lane_dist = main_widget_info["Extra"].get("Lane Distribution", {})
+        sorted_lanes = sorted(lane_dist.items(), key=lambda x: x[1], reverse=True)
+
+        f.write(f"<tr align='left'><th><pre>Lane Distribution (Last {global_data['Total Matches']} Games)\n-------------------------\n")
+
+        for lane_name, percentage in sorted_lanes:
+            safe_name = lane_name.replace(" ", "_")
+            ig.create_lane_loading_bar(lane_name, percentage, f"../readme-lol-items/loading_{safe_name}.gif")
+            f.write(f"<img src='readme-lol-items/loading_{safe_name}.gif' alt='drawing' width='400'/>\n")
+
         f.write(f"-------------------------\n")
         
 
@@ -221,8 +219,8 @@ def create_played_and_recent_widget(target_file, temp_file, config, global_data,
 
         
 
-        # Recent Match History Table
-        match_details = main_widget_info.get("Extra", {}).get("Match Details", [])
+        # Recent Match History Table (last 10 only)
+        match_details = main_widget_info.get("Extra", {}).get("Match Details", [])[:10]
         if match_details:
             version = dd.get_version()
             f.write(f"\n<h4 align='center'>Recent Matches</h4>\n")
@@ -350,6 +348,16 @@ def get_main_section_data(region_name, puuid, api_key, extra_data, list_of_match
     extra_data["Last Played Champs"] = last_champs_played
     extra_data["Match Details"] = match_details
 
+    # Lane distribution
+    lane_names = {"TOP": "Top", "JUNGLE": "Jungle", "MIDDLE": "Mid", "BOTTOM": "Bot", "UTILITY": "Support", "Invalid": "ARAM"}
+    lane_counts = Counter(played_positions)
+    total_games = len(played_positions)
+    lane_percentages = {}
+    for pos, count in lane_counts.items():
+        display_name = lane_names.get(pos, pos)
+        lane_percentages[display_name] = (count / total_games) * 100
+    extra_data["Lane Distribution"] = lane_percentages
+
     # Generates the information for the 5 most played champions
     total_length = len(last_champs_played)
     played_percentage = Counter(last_champs_played)
@@ -450,10 +458,6 @@ def main():
         mastery_widget_info = get_mastery_section_data(region_code, puuid, key)
 
         
-        # Gather the square and loading images
-        dd.get_champ_images(main_widget_info["Most Played"], "square_champs")
-   
-     
         target_file = "../" + config["Target File"]
         temp_file = "readme_lol_stats.md"
         create_played_and_recent_widget(target_file, temp_file, config, global_data, main_widget_info, mastery_widget_info)
