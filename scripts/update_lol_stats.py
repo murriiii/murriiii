@@ -236,9 +236,13 @@ def main():
 
     print("Fetching summoner info...")
     summoner = get_summoner(puuid)
+    print(f"  Summoner keys: {list(summoner.keys())}")
+    summoner_id = summoner.get("id", summoner.get("encryptedSummonerId", ""))
+    print(f"  Summoner ID: {summoner_id[:10]}...")
+    print(f"  Level: {summoner.get('summonerLevel', 'N/A')}")
 
     print("Fetching ranked data...")
-    ranked = get_ranked(summoner["id"])
+    ranked = get_ranked(summoner_id)
 
     print("Fetching top masteries...")
     masteries = get_top_masteries(puuid, count=4)
