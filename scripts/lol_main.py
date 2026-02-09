@@ -1,6 +1,7 @@
 from dotenv import load_dotenv
 import os
 import json
+import pathlib
 from collections import Counter
 import shutil
 import data_dragon_functions as dd
@@ -8,6 +9,58 @@ import riot_api_functions as rf
 import image_generation as ig
 import time
 import logging
+
+
+CACHE_DIR = pathlib.Path.home() / ".lol-cache"
+CACHE_FILE = CACHE_DIR / "matches.json"
+
+
+def load_cache():
+    if CACHE_FILE.exists():
+        with open(CACHE_FILE, "r", encoding="utf-8") as f:
+            return json.load(f)
+    return {"matches": {}}
+
+
+def save_cache(cache):
+    CACHE_DIR.mkdir(parents=True, exist_ok=True)
+    # Keep only last 300 matches to prevent unbounded growth
+    if len(cache["matches"]) > 300:
+        sorted_ids = sorted(cache["matches"].keys(), reverse=True)[:300]
+        cache["matches"] = {k: cache["matches"][k] for k in sorted_ids}
+    with open(CACHE_FILE, "w", encoding="utf-8") as f:
+        json.dump(cache, f, indent=2)
+
+
+def fetch_match_participant(region_name, puuid, api_key, match_id, cache):
+    """Get participant data for a match, using cache if available."""
+    if match_id in cache["matches"]:
+        return cache["matches"][match_id], False
+
+    response = rf.get_match_data(region_name, match_id, api_key)
+    for p in response["info"]["participants"]:
+        if p["puuid"] == puuid:
+            data = {
+                "championName": p["championName"],
+                "kills": p["kills"],
+                "deaths": p["deaths"],
+                "assists": p["assists"],
+                "win": p["win"],
+                "totalMinionsKilled": p.get("totalMinionsKilled", 0),
+                "neutralMinionsKilled": p.get("neutralMinionsKilled", 0),
+                "individualPosition": p["individualPosition"],
+                "timeCCingOthers": p["timeCCingOthers"],
+                "abilityUses": p.get("challenges", {}).get("abilityUses", 0),
+                "soloKills": p.get("challenges", {}).get("soloKills", 0),
+                "takedowns": p.get("challenges", {}).get("takedowns", 0),
+                "pentaKills": p["pentaKills"],
+                "quadraKills": p["quadraKills"],
+                "tripleKills": p["tripleKills"],
+                "doubleKills": p["doubleKills"],
+            }
+            cache["matches"][match_id] = data
+            return data, True
+    return None, True
 
 
 '''
@@ -272,7 +325,7 @@ Returns:
 recent_most_played is a list of champion names in order of most played recently, played_percentage is a dictionary with champion names and
 what percentage of matches they were played recently, and extra_data (from the parameters).
 '''
-def get_main_section_data(region_name, puuid, api_key, extra_data, list_of_matches):
+def get_main_section_data(region_name, puuid, api_key, extra_data, list_of_matches, cache):
     # Generate a list of champions that I played in the last x matches
     last_champs_played = []
     played_positions = []
@@ -292,41 +345,45 @@ def get_main_section_data(region_name, puuid, api_key, extra_data, list_of_match
     triplekills = 0
     doublekills = 0
 
+    cached_count = 0
 
-    for match in list_of_matches:
-        response = rf.get_match_data(region_name, match, api_key)
-        for participant in response["info"]["participants"]:
-            if participant["puuid"] == puuid:
-                last_champs_played.append(participant["championName"])
+    for match_id in list_of_matches:
+        participant, was_fetched = fetch_match_participant(region_name, puuid, api_key, match_id, cache)
+        if participant is None:
+            continue
+        if not was_fetched:
+            cached_count += 1
 
-                match_details.append({
-                    "champion": participant["championName"],
-                    "kills": participant["kills"],
-                    "deaths": participant["deaths"],
-                    "assists": participant["assists"],
-                    "win": participant["win"],
-                    "cs": participant.get("totalMinionsKilled", 0) + participant.get("neutralMinionsKilled", 0),
-                })
+        last_champs_played.append(participant["championName"])
 
-                played_positions.append(participant["individualPosition"])
-                time_ccing += participant["timeCCingOthers"]
+        match_details.append({
+            "champion": participant["championName"],
+            "kills": participant["kills"],
+            "deaths": participant["deaths"],
+            "assists": participant["assists"],
+            "win": participant["win"],
+            "cs": participant["totalMinionsKilled"] + participant["neutralMinionsKilled"],
+        })
 
-                if "challenges" in participant:
-                    ability_usage += participant["challenges"]["abilityUses"]
-                    solo_kills += participant["challenges"]["soloKills"]
-                    take_downs += participant["challenges"]["takedowns"]
+        played_positions.append(participant["individualPosition"])
+        time_ccing += participant["timeCCingOthers"]
+        ability_usage += participant["abilityUses"]
+        solo_kills += participant["soloKills"]
+        take_downs += participant["takedowns"]
 
-                global_kills += participant["kills"]
-                global_deaths += participant["deaths"]
-                global_assists += participant["assists"]
+        global_kills += participant["kills"]
+        global_deaths += participant["deaths"]
+        global_assists += participant["assists"]
 
-                pentakills += participant["pentaKills"]
-                quadrakills += participant["quadraKills"]
-                triplekills += participant["tripleKills"]
-                doublekills += participant["doubleKills"]
+        pentakills += participant["pentaKills"]
+        quadrakills += participant["quadraKills"]
+        triplekills += participant["tripleKills"]
+        doublekills += participant["doubleKills"]
 
+        if was_fetched:
+            time.sleep(1)
 
-        time.sleep(1)
+    print(f"Matches: {len(list_of_matches)} total, {cached_count} from cache, {len(list_of_matches) - cached_count} fetched")
 
 
     extra_data["Takedowns"] = take_downs
@@ -431,6 +488,8 @@ def main():
         load_dotenv()
         total_matches_to_look = 10
 
+        cache = load_cache()
+        print(f"Cache loaded: {len(cache['matches'])} matches cached")
 
         key = os.getenv("API_KEY") or os.getenv("RIOT_API_KEY")
         config = json.load(open("../readme-lol-items/config.json"))
@@ -450,14 +509,17 @@ def main():
 
         # Get list of matches for the given user
         matches = rf.get_summoners_matches(region_name, puuid, key, 0, total_matches_to_look)
-        
+
 
         # Returns the extra_data and a reverse list of the recently played champions
-        main_widget_info = get_main_section_data(region_name, puuid, key, extra_data, matches)
+        main_widget_info = get_main_section_data(region_name, puuid, key, extra_data, matches, cache)
         # Get Mastery Info
         mastery_widget_info = get_mastery_section_data(region_code, puuid, key)
 
-        
+        save_cache(cache)
+        print(f"Cache saved: {len(cache['matches'])} matches cached")
+
+
         target_file = "../" + config["Target File"]
         temp_file = "readme_lol_stats.md"
         create_played_and_recent_widget(target_file, temp_file, config, global_data, main_widget_info, mastery_widget_info)
