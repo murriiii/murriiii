@@ -116,7 +116,7 @@ def create_played_and_recent_widget(target_file, temp_file, config, global_data,
 
      # Write the actual display content to a temporary file
     with open(temp_file, "w", encoding="utf-8") as f:
-        f.write(f"<h3 align='center'> Data from Last {global_data['Total Matches']} Matches for {config['Summoner Name']}</h3>")
+        f.write(f"<h3 align='center'>ich wei\u00df ich bin ein noob, aber auch ein noob hat ein stolz :D - {config['Summoner Name']}</h3>")
         f.write(f"<table align='center'><tr></tr>\n")
         f.write(f"<tr align='left'><th><pre>Top {len(main_widget_info['Most Played'])} Recently Played Champions\n-------------------------\n")
         
