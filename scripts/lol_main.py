@@ -116,7 +116,7 @@ def create_played_and_recent_widget(target_file, temp_file, config, global_data,
 
      # Write the actual display content to a temporary file
     with open(temp_file, "w", encoding="utf-8") as f:
-        f.write(f"<h3 align='center'>ich wei\u00df ich bin ein noob, aber auch ein noob hat ein stolz :D - {config['Summoner Name']}</h3>")
+        f.write(f"<h3 align='center'>i know i'm a noob, but even a noob has pride :D - {config['Summoner Name']}</h3>")
         f.write(f"<table align='center'><tr></tr>\n")
 
         # Lane Distribution (left side)
@@ -223,7 +223,7 @@ def create_played_and_recent_widget(target_file, temp_file, config, global_data,
         match_details = main_widget_info.get("Extra", {}).get("Match Details", [])[:10]
         if match_details:
             version = dd.get_version()
-            f.write(f"\n<h4 align='center'>Recent Matches</h4>\n")
+            f.write(f"\n<details>\n<summary><h4 align='center'>Recent Matches</h4></summary>\n")
             f.write(f"<table align='center'>\n")
             f.write(f"<tr><th></th><th>Champion</th><th>K/D/A</th><th>KDA</th><th>CS</th><th>Result</th></tr>\n")
             for m in match_details:
@@ -242,7 +242,7 @@ def create_played_and_recent_widget(target_file, temp_file, config, global_data,
                 f.write(f"<td align='center'>{kda:.1f}</td>")
                 f.write(f"<td align='center'>{cs}</td>")
                 f.write(f"<td align='center'>{result}</td></tr>\n")
-            f.write(f"</table>\n")
+            f.write(f"</table>\n</details>\n")
 
 
         if config.get("Toggle Credit"):
