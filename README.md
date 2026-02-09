@@ -86,55 +86,5 @@ const murat = {
 
 #### `> after hours`
 
-<table align="center">
-<tr>
-<td align="center"><b>ムラット#2349</b><br/>Level 977 · EUW<br/><br/><img src="https://img.shields.io/badge/Solo%2FDuo-Unranked-6c757d?style=flat-square&logo=riotgames&logoColor=white"/><br/><img src="https://img.shields.io/badge/Flex-Unranked-6c757d?style=flat-square&logo=riotgames&logoColor=white"/></td>
-<td align="center"><img src="https://ddragon.leagueoflegends.com/cdn/15.3.1/img/champion/Teemo.png" width="48"/><br/><b>Teemo</b><br/><sub>1.2M Mastery</sub></td>
-<td align="center"><img src="https://ddragon.leagueoflegends.com/cdn/15.3.1/img/champion/Yorick.png" width="48"/><br/><b>Yorick</b><br/><sub>680K Mastery</sub></td>
-<td align="center"><img src="https://ddragon.leagueoflegends.com/cdn/15.3.1/img/champion/Amumu.png" width="48"/><br/><b>Amumu</b><br/><sub>419K Mastery</sub></td>
-<td align="center"><img src="https://ddragon.leagueoflegends.com/cdn/15.3.1/img/champion/Pantheon.png" width="48"/><br/><b>Pantheon</b><br/><sub>404K Mastery</sub></td>
-</tr>
-</table>
-
-<details>
-<summary align="center"><b>Recent Matches</b></summary>
-<br/>
-<table align="center">
-<tr><th></th><th>Champion</th><th>K/D/A</th><th>KDA</th><th>Result</th></tr>
-<tr>
-<td align="center"><img src="https://ddragon.leagueoflegends.com/cdn/15.3.1/img/champion/Urgot.png" width="32"/></td>
-<td align="center"><b>Urgot</b></td>
-<td align="center">8/4/1</td>
-<td align="center">2.2 KDA</td>
-<td align="center"><img src="https://img.shields.io/badge/Win-Win-27AE60?style=flat-square"/></td>
-</tr>
-<tr>
-<td align="center"><img src="https://ddragon.leagueoflegends.com/cdn/15.3.1/img/champion/Urgot.png" width="32"/></td>
-<td align="center"><b>Urgot</b></td>
-<td align="center">11/11/1</td>
-<td align="center">1.1 KDA</td>
-<td align="center"><img src="https://img.shields.io/badge/Loss-Loss-E74C3C?style=flat-square"/></td>
-</tr>
-<tr>
-<td align="center"><img src="https://ddragon.leagueoflegends.com/cdn/15.3.1/img/champion/Teemo.png" width="32"/></td>
-<td align="center"><b>Teemo</b></td>
-<td align="center">7/8/8</td>
-<td align="center">1.9 KDA</td>
-<td align="center"><img src="https://img.shields.io/badge/Win-Win-27AE60?style=flat-square"/></td>
-</tr>
-<tr>
-<td align="center"><img src="https://ddragon.leagueoflegends.com/cdn/15.3.1/img/champion/Urgot.png" width="32"/></td>
-<td align="center"><b>Urgot</b></td>
-<td align="center">5/14/4</td>
-<td align="center">0.6 KDA</td>
-<td align="center"><img src="https://img.shields.io/badge/Loss-Loss-E74C3C?style=flat-square"/></td>
-</tr>
-<tr>
-<td align="center"><img src="https://ddragon.leagueoflegends.com/cdn/15.3.1/img/champion/Malphite.png" width="32"/></td>
-<td align="center"><b>Malphite</b></td>
-<td align="center">7/4/8</td>
-<td align="center">3.8 KDA</td>
-<td align="center"><img src="https://img.shields.io/badge/Win-Win-27AE60?style=flat-square"/></td>
-</tr>
-</table>
-</details>
+<!---LOL-STATS-START-HERE--->
+<!---LOL-STATS-END-HERE--->
