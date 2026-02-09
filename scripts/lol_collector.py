@@ -132,9 +132,9 @@ def fetch_and_store_matches(conn, puuid, api_key, region_name, match_ids, stored
                     fetched += 1
                     break
             time.sleep(1.5)
-        except rf.RiotApiBadRequest as e:
+        except Exception as e:
             print(f"Error fetching {match_id}: {e}")
-            time.sleep(2)
+            time.sleep(5)
 
     return fetched
 

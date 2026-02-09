@@ -21,16 +21,22 @@ def riot_api_get(region, endpoint, params):
     url = f"https://{region}.api.riotgames.com/{endpoint}"
     if query:
         url = f"{url}?{query}"
-    for attempt in range(4):
-        response = requests.get(url, headers=headers, timeout=15)
+    for attempt in range(5):
+        try:
+            response = requests.get(url, headers=headers, timeout=15)
+        except (requests.ConnectionError, requests.Timeout) as e:
+            wait = 5 * (attempt + 1)
+            print(f"Connection error, retrying in {wait}s... (attempt {attempt + 1}/5): {e}")
+            time.sleep(wait)
+            continue
         if response.status_code == 429:
             retry_after = int(response.headers.get("Retry-After", 10))
-            print(f"Rate limited, waiting {retry_after}s... (attempt {attempt + 1}/4)")
+            print(f"Rate limited, waiting {retry_after}s... (attempt {attempt + 1}/5)")
             time.sleep(retry_after)
             continue
         break
     else:
-        raise RiotApiBadRequest(f"Riot API rate limit exceeded after retries for {endpoint}")
+        raise RiotApiBadRequest(f"Riot API failed after retries for {endpoint}")
     data = response.json()
     if isinstance(data, dict) and "status" in data and data["status"]["status_code"] != 200:
         message = f"Error in getting endpoint {endpoint}\nin region {region}\n" + \
