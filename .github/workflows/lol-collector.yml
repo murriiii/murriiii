@@ -1,0 +1,40 @@
+name: LoL Match Collector
+
+on:
+  schedule:
+    - cron: '*/30 * * * *'
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: 'Collection mode'
+        required: true
+        default: 'all'
+        type: choice
+        options:
+          - all
+          - collect
+          - backfill
+          - mastery
+
+jobs:
+  collect:
+    runs-on: self-hosted
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: pip install requests python-dotenv psycopg2-binary
+
+      - name: Run collector
+        env:
+          API_KEY: ${{ secrets.API_KEY }}
+          RIOT_API_KEY: ${{ secrets.API_KEY }}
+          DB_HOST: localhost
+          DB_PORT: '5432'
+          DB_NAME: lol_stats
+          DB_USER: ${{ secrets.DB_USER }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          COLLECT_MODE: ${{ inputs.mode || 'all' }}
+        working-directory: scripts
+        run: python lol_collector.py "$COLLECT_MODE"

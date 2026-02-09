@@ -4,26 +4,46 @@ on:
   schedule:
     - cron: '0 6 * * *'
   workflow_dispatch:
+    inputs:
+      source:
+        description: 'Data source'
+        required: true
+        default: 'db'
+        type: choice
+        options:
+          - db
+          - api
 
 permissions:
   contents: write
 
 jobs:
   update:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
       - name: Install dependencies
-        run: pip install Pillow requests python-dotenv numpy imageio
+        run: pip install Pillow requests python-dotenv numpy imageio psycopg2-binary
 
       - name: Update LoL stats
         env:
           API_KEY: ${{ secrets.API_KEY }}
           RIOT_API_KEY: ${{ secrets.API_KEY }}
+          DB_HOST: localhost
+          DB_PORT: '5432'
+          DB_NAME: lol_stats
+          DB_USER: ${{ secrets.DB_USER }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          DATA_SOURCE: ${{ inputs.source || 'db' }}
         working-directory: scripts
-        run: python lol_main.py
+        run: |
+          if [ "$DATA_SOURCE" = "db" ]; then
+            python lol_main.py --from-db
+          else
+            python lol_main.py
+          fi
 
       - name: Commit and push
         run: |
