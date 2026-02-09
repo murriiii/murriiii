@@ -3,7 +3,6 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/murriiii"><img src="https://img.shields.io/badge/-GitHub-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub"/></a>
   <a href="https://www.linkedin.com/in/muratince89"><img src="https://img.shields.io/badge/-LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn"/></a>
   <img src="https://komarev.com/ghpvc/?username=murriiii&style=for-the-badge&color=blue" alt="Profile Views"/>
 </p>
@@ -20,76 +19,71 @@
 
 ```js
 const murat = {
-    location: "Lichtenfels, Germany",
     role: ["Software Developer", "Mathematician"],
-    education: "B.Sc. Informatik @ Hochschule Coburg",
+    education: "B.Sc. Informatik",
     code: ["Python", "TypeScript", "Dart", "ABAP", "SQL", "VBA"],
-    sap: ["SAPUI5", "Fiori Elements", "CDS", "RAP", "S/4HANA"],
     interests: {
         ai: "Machine Learning & Deep Learning",
         blockchain: "DeFi & Smart Contracts",
         finance: "Algorithmic Trading & Quant Models",
         sap: "Clean ABAP & Fiori Development",
     },
-    currentProject: "AI-enhanced Crypto Trading Bot 🤖📈",
-    funFact: "I mass-produce commits between 18:00 and 00:00 🌙",
+    currentProject: "AI-enhanced Crypto Trading Bot",
     motto: "In math we trust, in code we verify.",
 };
 ```
 
 ---
 
-#### `> languages`
-<p align="center">
-  <img src="https://img.shields.io/badge/-Python-3776AB?style=for-the-badge&logo=python&logoColor=white"/>
-  <img src="https://img.shields.io/badge/-TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white"/>
-  <img src="https://img.shields.io/badge/-JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black"/>
-  <img src="https://img.shields.io/badge/-Dart-0175C2?style=for-the-badge&logo=dart&logoColor=white"/>
-  <img src="https://img.shields.io/badge/-ABAP-0FAAFF?style=for-the-badge&logo=sap&logoColor=white"/>
-  <img src="https://img.shields.io/badge/-SQL-4479A1?style=for-the-badge&logo=postgresql&logoColor=white"/>
-  <img src="https://img.shields.io/badge/-VBA-217346?style=for-the-badge&logo=microsoftexcel&logoColor=white"/>
-</p>
+#### `> tech stack`
 
-#### `> sap & enterprise`
-<p align="center">
-  <img src="https://img.shields.io/badge/-SAPUI5-0FAAFF?style=for-the-badge&logo=sap&logoColor=white"/>
-  <img src="https://img.shields.io/badge/-Fiori_Elements-0FAAFF?style=for-the-badge&logo=sap&logoColor=white"/>
-  <img src="https://img.shields.io/badge/-S%2F4HANA-0FAAFF?style=for-the-badge&logo=sap&logoColor=white"/>
-  <img src="https://img.shields.io/badge/-CDS-0FAAFF?style=for-the-badge&logo=sap&logoColor=white"/>
-  <img src="https://img.shields.io/badge/-RAP-0FAAFF?style=for-the-badge&logo=sap&logoColor=white"/>
-</p>
-
-#### `> frameworks & mobile`
-<p align="center">
-  <img src="https://img.shields.io/badge/-Flutter-02569B?style=for-the-badge&logo=flutter&logoColor=white"/>
-  <img src="https://img.shields.io/badge/-Hono-E36002?style=for-the-badge&logo=hono&logoColor=white"/>
-</p>
-
-#### `> ml & data science`
-<p align="center">
-  <img src="https://img.shields.io/badge/-PyTorch-EE4C2C?style=for-the-badge&logo=pytorch&logoColor=white"/>
-  <img src="https://img.shields.io/badge/-NumPy-013243?style=for-the-badge&logo=numpy&logoColor=white"/>
-  <img src="https://img.shields.io/badge/-Pandas-150458?style=for-the-badge&logo=pandas&logoColor=white"/>
-  <img src="https://img.shields.io/badge/-scikit--learn-F7931E?style=for-the-badge&logo=scikit-learn&logoColor=white"/>
-</p>
-
-#### `> infra & devops`
-<p align="center">
-  <img src="https://img.shields.io/badge/-Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white"/>
-  <img src="https://img.shields.io/badge/-Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black"/>
-  <img src="https://img.shields.io/badge/-PostgreSQL-4169E1?style=for-the-badge&logo=postgresql&logoColor=white"/>
-  <img src="https://img.shields.io/badge/-Redis-DC382D?style=for-the-badge&logo=redis&logoColor=white"/>
-  <img src="https://img.shields.io/badge/-Git-F05032?style=for-the-badge&logo=git&logoColor=white"/>
-  <img src="https://img.shields.io/badge/-Cloudflare-F38020?style=for-the-badge&logo=cloudflare&logoColor=white"/>
-</p>
-
-#### `> blockchain & crypto`
-<p align="center">
-  <img src="https://img.shields.io/badge/-Ethereum-3C3C3D?style=for-the-badge&logo=ethereum&logoColor=white"/>
-  <img src="https://img.shields.io/badge/-Binance-F0B90B?style=for-the-badge&logo=binance&logoColor=black"/>
-</p>
+<table align="center">
+<tr><td align="center"><b>Languages</b></td>
+<td>
+<img src="https://img.shields.io/badge/-Python-3776AB?style=flat-square&logo=python&logoColor=white"/>
+<img src="https://img.shields.io/badge/-TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white"/>
+<img src="https://img.shields.io/badge/-JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black"/>
+<img src="https://img.shields.io/badge/-Dart-0175C2?style=flat-square&logo=dart&logoColor=white"/>
+<img src="https://img.shields.io/badge/-ABAP-0FAAFF?style=flat-square&logo=sap&logoColor=white"/>
+<img src="https://img.shields.io/badge/-SQL-4479A1?style=flat-square&logo=postgresql&logoColor=white"/>
+</td></tr>
+<tr><td align="center"><b>SAP</b></td>
+<td>
+<img src="https://img.shields.io/badge/-SAPUI5-0FAAFF?style=flat-square&logo=sap&logoColor=white"/>
+<img src="https://img.shields.io/badge/-Fiori_Elements-0FAAFF?style=flat-square&logo=sap&logoColor=white"/>
+<img src="https://img.shields.io/badge/-S%2F4HANA-0FAAFF?style=flat-square&logo=sap&logoColor=white"/>
+<img src="https://img.shields.io/badge/-CDS-0FAAFF?style=flat-square&logo=sap&logoColor=white"/>
+<img src="https://img.shields.io/badge/-RAP-0FAAFF?style=flat-square&logo=sap&logoColor=white"/>
+</td></tr>
+<tr><td align="center"><b>ML & Data</b></td>
+<td>
+<img src="https://img.shields.io/badge/-PyTorch-EE4C2C?style=flat-square&logo=pytorch&logoColor=white"/>
+<img src="https://img.shields.io/badge/-NumPy-013243?style=flat-square&logo=numpy&logoColor=white"/>
+<img src="https://img.shields.io/badge/-Pandas-150458?style=flat-square&logo=pandas&logoColor=white"/>
+<img src="https://img.shields.io/badge/-scikit--learn-F7931E?style=flat-square&logo=scikit-learn&logoColor=white"/>
+</td></tr>
+<tr><td align="center"><b>Infra</b></td>
+<td>
+<img src="https://img.shields.io/badge/-Docker-2496ED?style=flat-square&logo=docker&logoColor=white"/>
+<img src="https://img.shields.io/badge/-Linux-FCC624?style=flat-square&logo=linux&logoColor=black"/>
+<img src="https://img.shields.io/badge/-PostgreSQL-4169E1?style=flat-square&logo=postgresql&logoColor=white"/>
+<img src="https://img.shields.io/badge/-Redis-DC382D?style=flat-square&logo=redis&logoColor=white"/>
+<img src="https://img.shields.io/badge/-Cloudflare-F38020?style=flat-square&logo=cloudflare&logoColor=white"/>
+</td></tr>
+<tr><td align="center"><b>Web3</b></td>
+<td>
+<img src="https://img.shields.io/badge/-Ethereum-3C3C3D?style=flat-square&logo=ethereum&logoColor=white"/>
+<img src="https://img.shields.io/badge/-Binance-F0B90B?style=flat-square&logo=binance&logoColor=black"/>
+<img src="https://img.shields.io/badge/-Flutter-02569B?style=flat-square&logo=flutter&logoColor=white"/>
+<img src="https://img.shields.io/badge/-Hono-E36002?style=flat-square&logo=hono&logoColor=white"/>
+</td></tr>
+</table>
 
 ---
+
+<p align="center">
+  <img src="https://streak-stats.demolab.com?user=murriiii&theme=tokyonight&hide_border=true" alt="GitHub Streak"/>
+</p>
 
 <p align="center">
   <img src="https://github-trophies.vercel.app/?username=murriiii&theme=tokyonight&no-frame=true&column=4&margin-w=15&margin-h=15" alt="GitHub Trophies"/>
