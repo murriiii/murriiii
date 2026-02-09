@@ -200,9 +200,9 @@ def create_played_and_recent_widget(target_file, temp_file, config, global_data,
             f.write(f"<th><pre>Top 3 Champion Masteries\n------------------------\n")
 
             images = [x for x in mastery_widget_info['Top Three Data']]
-            ig.create_mastery_gif(f'loading_images/{images[0][1]}.png', 
-            f'loading_images/{images[1][1]}.png', f'loading_images/{images[2][1]}.png', 
-            f'{images[0][0]}: {images[0][2]}', f'{images[1][0]}: {images[1][2]}', f'{images[2][0]}: {images[2][2]}', '../readme-lol-items/mastery.gif')
+            ig.create_mastery_gif(f'loading_images/{images[0][1]}.png',
+            f'loading_images/{images[1][1]}.png', f'loading_images/{images[2][1]}.png',
+            f'{images[0][0]}: {images[0][2]:,}', f'{images[1][0]}: {images[1][2]:,}', f'{images[2][0]}: {images[2][2]:,}', '../readme-lol-items/mastery.gif')
             f.write(f"<img align='center' src='readme-lol-items/mastery.gif' alt='drawing' width='320'/> ")
 
             # '''
@@ -221,11 +221,30 @@ def create_played_and_recent_widget(target_file, temp_file, config, global_data,
 
         
 
-        # # Minimal Widget of Last 10 Champions
-        # temp_list_of_champs = main_widget_info["Extra"].get("Last Played Champs")[:10]
-        # f.write(f"<table align='center'><tr></tr><tr><th><pre>Last {len(temp_list_of_champs)} Champions\n")
-        # f.write(f'{last_played_champ_squares(temp_list_of_champs)}\n')
-        # f.write("</pre></th></tr></table>")
+        # Recent Match History Table
+        match_details = main_widget_info.get("Extra", {}).get("Match Details", [])
+        if match_details:
+            version = dd.get_version()
+            f.write(f"\n<h4 align='center'>Recent Matches</h4>\n")
+            f.write(f"<table align='center'>\n")
+            f.write(f"<tr><th></th><th>Champion</th><th>K/D/A</th><th>KDA</th><th>CS</th><th>Result</th></tr>\n")
+            for m in match_details:
+                k, d, a = m["kills"], m["deaths"], m["assists"]
+                kda = (k + a) / max(d, 1)
+                cs = m["cs"]
+                champ = m["champion"]
+                if m["win"]:
+                    result = "<img src='https://img.shields.io/badge/WIN-27AE60?style=flat-square'/>"
+                else:
+                    result = "<img src='https://img.shields.io/badge/LOSS-E74C3C?style=flat-square'/>"
+                icon = f"https://ddragon.leagueoflegends.com/cdn/{version}/img/champion/{champ}.png"
+                f.write(f"<tr><td><img src='{icon}' width='28'/></td>")
+                f.write(f"<td><b>{champ}</b></td>")
+                f.write(f"<td align='center'>{k}/{d}/{a}</td>")
+                f.write(f"<td align='center'>{kda:.1f}</td>")
+                f.write(f"<td align='center'>{cs}</td>")
+                f.write(f"<td align='center'>{result}</td></tr>\n")
+            f.write(f"</table>\n")
 
 
         if config.get("Toggle Credit"):
@@ -259,6 +278,7 @@ def get_main_section_data(region_name, puuid, api_key, extra_data, list_of_match
     # Generate a list of champions that I played in the last x matches
     last_champs_played = []
     played_positions = []
+    match_details = []
 
     time_ccing = 0
     ability_usage = 0
@@ -281,7 +301,15 @@ def get_main_section_data(region_name, puuid, api_key, extra_data, list_of_match
             if participant["puuid"] == puuid:
                 last_champs_played.append(participant["championName"])
 
-                
+                match_details.append({
+                    "champion": participant["championName"],
+                    "kills": participant["kills"],
+                    "deaths": participant["deaths"],
+                    "assists": participant["assists"],
+                    "win": participant["win"],
+                    "cs": participant.get("totalMinionsKilled", 0) + participant.get("neutralMinionsKilled", 0),
+                })
+
                 played_positions.append(participant["individualPosition"])
                 time_ccing += participant["timeCCingOthers"]
 
@@ -320,6 +348,7 @@ def get_main_section_data(region_name, puuid, api_key, extra_data, list_of_match
     extra_data["Doublekills"] = doublekills
 
     extra_data["Last Played Champs"] = last_champs_played
+    extra_data["Match Details"] = match_details
 
     # Generates the information for the 5 most played champions
     total_length = len(last_champs_played)
