@@ -24,15 +24,26 @@ DDRAGON_BASE = f"https://ddragon.leagueoflegends.com/cdn/{DDRAGON_VERSION}"
 CHAMPION_MAP = {}
 
 
+HEADERS = {
+    "X-Riot-Token": "",
+    "User-Agent": "Mozilla/5.0 (GitHub-Actions; +https://github.com/murriiii/murriiii)",
+    "Accept-Language": "en-US,en;q=0.9",
+    "Accept-Charset": "application/x-www-form-urlencoded; charset=UTF-8",
+    "Origin": "https://developer.riotgames.com",
+}
+
+
 def api_get(url):
     """Make a GET request to Riot API."""
-    req = urllib.request.Request(url, headers={"X-Riot-Token": API_KEY})
+    headers = {**HEADERS, "X-Riot-Token": API_KEY}
+    req = urllib.request.Request(url, headers=headers)
     try:
-        with urllib.request.urlopen(req) as resp:
+        with urllib.request.urlopen(req, timeout=15) as resp:
             return json.loads(resp.read().decode())
     except urllib.error.HTTPError as e:
+        body = e.read().decode()
         print(f"API Error {e.code}: {url}")
-        print(f"  {e.read().decode()}")
+        print(f"  {body}")
         sys.exit(1)
 
 
