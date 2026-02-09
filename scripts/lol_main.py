@@ -372,7 +372,10 @@ def main():
     logging.basicConfig(format='%(message)s')
     log = logging.getLogger(__name__)
     try:
-        
+        # Ensure required directories exist
+        os.makedirs("loading_images", exist_ok=True)
+        os.makedirs("square_champs", exist_ok=True)
+        os.makedirs("../readme-lol-items", exist_ok=True)
 
         test = os.listdir("../readme-lol-items")
         for item in test:
