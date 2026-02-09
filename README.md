@@ -87,7 +87,7 @@ const murat = {
 #### `> after hours`
 
 <!---LOL-STATS-START-HERE--->
-<h3 align='center'> Data from Last 10 Matches for ムラット#2349</h3><table align='center'><tr></tr>
+<h3 align='center'>ich weiß ich bin ein noob, aber auch ein noob hat ein stolz :D - ムラット#2349</h3><table align='center'><tr></tr>
 <tr align='left'><th><pre>Top 4 Recently Played Champions
 -------------------------
 <img src='readme-lol-items/loading_Urgot.gif' alt='drawing' width='400'/>
