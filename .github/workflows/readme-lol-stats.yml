@@ -1,0 +1,40 @@
+name: Update LoL Stats
+
+on:
+  schedule:
+    - cron: '0 6 * * *'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout current repo
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.9'
+
+      - name: Upgrade Pip
+        run: python -m pip install --upgrade pip
+
+      - name: Run readme-lol-stats
+        uses: rithikasilva/readme-lol-stats@master
+        with:
+          source: ${{ github.event.repository.name }}
+          api-key: ${{ secrets.API_KEY }}
+
+      - name: Commit and push
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add -A
+          git diff-index --quiet HEAD || (git commit -a -m "Update LoL stats" --allow-empty)
+
+      - name: Push changes
+        uses: ad-m/github-push-action@v0.6.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: main
