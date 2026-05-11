@@ -19,17 +19,17 @@
 
 ```js
 const murat = {
-    role: ["Software Developer", "Mathematician"],
-    education: "B.Sc. Informatik",
-    code: ["Python", "TypeScript", "Dart", "ABAP", "SQL", "VBA"],
+    role: ["SAP Developer", "Mathematician"],
+    education: "B.Sc. Mathematics",
+    code: ["TypeScript", "Swift", "Python", "ABAP", "Dart", "SQL"],
     interests: {
-        ai: "Machine Learning & Deep Learning",
-        blockchain: "DeFi & Smart Contracts",
-        finance: "Algorithmic Trading & Quant Models",
-        sap: "Clean ABAP & Fiori Development",
+        mobile: "iOS & Cross-Platform Development",
+        web: "Full-Stack with Next.js & TypeScript",
+        sap: "Clean ABAP, RAP & Fiori",
+        ai: "Machine Learning & Applied AI",
     },
-    currentProject: "AI-enhanced Crypto Trading Bot",
-    motto: "In math we trust, in code we verify.",
+    currentProject: "Building iOS & web apps",
+    motto: "Late-game scaling — in code and in life.",
 };
 ```
 
