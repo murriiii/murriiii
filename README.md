@@ -93,8 +93,6 @@ const murat = {
 <img src='readme-lol-items/loading_Top.gif' alt='drawing' width='400'/>
 <img src='readme-lol-items/loading_Bot.gif' alt='drawing' width='400'/>
 <img src='readme-lol-items/loading_Jungle.gif' alt='drawing' width='400'/>
-<img src='readme-lol-items/loading_Mid.gif' alt='drawing' width='400'/>
-<img src='readme-lol-items/loading_ARAM.gif' alt='drawing' width='400'/>
 -------------------------
 <img align='center' src='readme-lol-items/extra_info.gif' alt='drawing' width='350'/></pre></th><th><pre>Top 3 Champion Masteries
 ------------------------
@@ -104,16 +102,16 @@ const murat = {
 <summary><h4 align='center'>Recent Matches</h4></summary>
 <table align='center'>
 <tr><th></th><th>Champion</th><th>K/D/A</th><th>KDA</th><th>CS</th><th>Result</th></tr>
-<tr><td><img src='https://ddragon.leagueoflegends.com/cdn/16.14.1/img/champion/Urgot.png' width='28'/></td><td><b>Urgot</b></td><td align='center'>3/5/4</td><td align='center'>1.4</td><td align='center'>187</td><td align='center'><img src='https://img.shields.io/badge/LOSS-E74C3C?style=flat-square'/></td></tr>
-<tr><td><img src='https://ddragon.leagueoflegends.com/cdn/16.14.1/img/champion/Yorick.png' width='28'/></td><td><b>Yorick</b></td><td align='center'>1/10/2</td><td align='center'>0.3</td><td align='center'>124</td><td align='center'><img src='https://img.shields.io/badge/LOSS-E74C3C?style=flat-square'/></td></tr>
-<tr><td><img src='https://ddragon.leagueoflegends.com/cdn/16.14.1/img/champion/Yorick.png' width='28'/></td><td><b>Yorick</b></td><td align='center'>1/2/9</td><td align='center'>5.0</td><td align='center'>241</td><td align='center'><img src='https://img.shields.io/badge/WIN-27AE60?style=flat-square'/></td></tr>
-<tr><td><img src='https://ddragon.leagueoflegends.com/cdn/16.14.1/img/champion/Naafiri.png' width='28'/></td><td><b>Naafiri</b></td><td align='center'>13/5/1</td><td align='center'>2.8</td><td align='center'>225</td><td align='center'><img src='https://img.shields.io/badge/LOSS-E74C3C?style=flat-square'/></td></tr>
-<tr><td><img src='https://ddragon.leagueoflegends.com/cdn/16.14.1/img/champion/Pantheon.png' width='28'/></td><td><b>Pantheon</b></td><td align='center'>10/10/11</td><td align='center'>2.1</td><td align='center'>167</td><td align='center'><img src='https://img.shields.io/badge/WIN-27AE60?style=flat-square'/></td></tr>
-<tr><td><img src='https://ddragon.leagueoflegends.com/cdn/16.14.1/img/champion/Naafiri.png' width='28'/></td><td><b>Naafiri</b></td><td align='center'>17/10/3</td><td align='center'>2.0</td><td align='center'>254</td><td align='center'><img src='https://img.shields.io/badge/LOSS-E74C3C?style=flat-square'/></td></tr>
-<tr><td><img src='https://ddragon.leagueoflegends.com/cdn/16.14.1/img/champion/Teemo.png' width='28'/></td><td><b>Teemo</b></td><td align='center'>5/8/7</td><td align='center'>1.5</td><td align='center'>132</td><td align='center'><img src='https://img.shields.io/badge/WIN-27AE60?style=flat-square'/></td></tr>
-<tr><td><img src='https://ddragon.leagueoflegends.com/cdn/16.14.1/img/champion/Urgot.png' width='28'/></td><td><b>Urgot</b></td><td align='center'>10/12/6</td><td align='center'>1.3</td><td align='center'>265</td><td align='center'><img src='https://img.shields.io/badge/WIN-27AE60?style=flat-square'/></td></tr>
-<tr><td><img src='https://ddragon.leagueoflegends.com/cdn/16.14.1/img/champion/Urgot.png' width='28'/></td><td><b>Urgot</b></td><td align='center'>9/10/3</td><td align='center'>1.2</td><td align='center'>226</td><td align='center'><img src='https://img.shields.io/badge/LOSS-E74C3C?style=flat-square'/></td></tr>
-<tr><td><img src='https://ddragon.leagueoflegends.com/cdn/16.14.1/img/champion/Naafiri.png' width='28'/></td><td><b>Naafiri</b></td><td align='center'>1/2/0</td><td align='center'>0.5</td><td align='center'>97</td><td align='center'><img src='https://img.shields.io/badge/WIN-27AE60?style=flat-square'/></td></tr>
+<tr><td><img src='https://ddragon.leagueoflegends.com/cdn/16.14.1/img/champion/TahmKench.png' width='28'/></td><td><b>TahmKench</b></td><td align='center'>7/5/11</td><td align='center'>3.6</td><td align='center'>173</td><td align='center'><img src='https://img.shields.io/badge/WIN-27AE60?style=flat-square'/></td></tr>
+<tr><td><img src='https://ddragon.leagueoflegends.com/cdn/16.14.1/img/champion/Yorick.png' width='28'/></td><td><b>Yorick</b></td><td align='center'>7/15/7</td><td align='center'>0.9</td><td align='center'>213</td><td align='center'><img src='https://img.shields.io/badge/LOSS-E74C3C?style=flat-square'/></td></tr>
+<tr><td><img src='https://ddragon.leagueoflegends.com/cdn/16.14.1/img/champion/Malzahar.png' width='28'/></td><td><b>Malzahar</b></td><td align='center'>3/10/9</td><td align='center'>1.2</td><td align='center'>361</td><td align='center'><img src='https://img.shields.io/badge/WIN-27AE60?style=flat-square'/></td></tr>
+<tr><td><img src='https://ddragon.leagueoflegends.com/cdn/16.14.1/img/champion/Malphite.png' width='28'/></td><td><b>Malphite</b></td><td align='center'>9/3/6</td><td align='center'>5.0</td><td align='center'>134</td><td align='center'><img src='https://img.shields.io/badge/WIN-27AE60?style=flat-square'/></td></tr>
+<tr><td><img src='https://ddragon.leagueoflegends.com/cdn/16.14.1/img/champion/Naafiri.png' width='28'/></td><td><b>Naafiri</b></td><td align='center'>6/5/3</td><td align='center'>1.8</td><td align='center'>183</td><td align='center'><img src='https://img.shields.io/badge/LOSS-E74C3C?style=flat-square'/></td></tr>
+<tr><td><img src='https://ddragon.leagueoflegends.com/cdn/16.14.1/img/champion/Urgot.png' width='28'/></td><td><b>Urgot</b></td><td align='center'>6/7/2</td><td align='center'>1.1</td><td align='center'>210</td><td align='center'><img src='https://img.shields.io/badge/LOSS-E74C3C?style=flat-square'/></td></tr>
+<tr><td><img src='https://ddragon.leagueoflegends.com/cdn/16.14.1/img/champion/Urgot.png' width='28'/></td><td><b>Urgot</b></td><td align='center'>0/0/0</td><td align='center'>0.0</td><td align='center'>0</td><td align='center'><img src='https://img.shields.io/badge/WIN-27AE60?style=flat-square'/></td></tr>
+<tr><td><img src='https://ddragon.leagueoflegends.com/cdn/16.14.1/img/champion/Urgot.png' width='28'/></td><td><b>Urgot</b></td><td align='center'>10/3/6</td><td align='center'>5.3</td><td align='center'>169</td><td align='center'><img src='https://img.shields.io/badge/WIN-27AE60?style=flat-square'/></td></tr>
+<tr><td><img src='https://ddragon.leagueoflegends.com/cdn/16.14.1/img/champion/Teemo.png' width='28'/></td><td><b>Teemo</b></td><td align='center'>2/3/2</td><td align='center'>1.3</td><td align='center'>140</td><td align='center'><img src='https://img.shields.io/badge/WIN-27AE60?style=flat-square'/></td></tr>
+<tr><td><img src='https://ddragon.leagueoflegends.com/cdn/16.14.1/img/champion/Urgot.png' width='28'/></td><td><b>Urgot</b></td><td align='center'>3/11/2</td><td align='center'>0.5</td><td align='center'>186</td><td align='center'><img src='https://img.shields.io/badge/LOSS-E74C3C?style=flat-square'/></td></tr>
 </table>
 </details>
 <!---LOL-STATS-END-HERE--->
