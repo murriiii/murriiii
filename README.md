@@ -105,6 +105,8 @@ const murat = {
 <summary><h4 align='center'>Recent Matches</h4></summary>
 <table align='center'>
 <tr><th></th><th>Champion</th><th>K/D/A</th><th>KDA</th><th>CS</th><th>Result</th></tr>
+<tr><td><img src='https://ddragon.leagueoflegends.com/cdn/16.18.1/img/champion/Amumu.png' width='28'/></td><td><b>Amumu</b></td><td align='center'>3/12/14</td><td align='center'>1.4</td><td align='center'>149</td><td align='center'><img src='https://img.shields.io/badge/LOSS-E74C3C?style=flat-square'/></td></tr>
+<tr><td><img src='https://ddragon.leagueoflegends.com/cdn/16.18.1/img/champion/Teemo.png' width='28'/></td><td><b>Teemo</b></td><td align='center'>8/11/8</td><td align='center'>1.5</td><td align='center'>184</td><td align='center'><img src='https://img.shields.io/badge/LOSS-E74C3C?style=flat-square'/></td></tr>
 <tr><td><img src='https://ddragon.leagueoflegends.com/cdn/16.18.1/img/champion/Urgot.png' width='28'/></td><td><b>Urgot</b></td><td align='center'>5/10/4</td><td align='center'>0.9</td><td align='center'>215</td><td align='center'><img src='https://img.shields.io/badge/LOSS-E74C3C?style=flat-square'/></td></tr>
 <tr><td><img src='https://ddragon.leagueoflegends.com/cdn/16.18.1/img/champion/Naafiri.png' width='28'/></td><td><b>Naafiri</b></td><td align='center'>11/4/0</td><td align='center'>2.8</td><td align='center'>226</td><td align='center'><img src='https://img.shields.io/badge/WIN-27AE60?style=flat-square'/></td></tr>
 <tr><td><img src='https://ddragon.leagueoflegends.com/cdn/16.18.1/img/champion/Malphite.png' width='28'/></td><td><b>Malphite</b></td><td align='center'>0/2/7</td><td align='center'>3.5</td><td align='center'>119</td><td align='center'><img src='https://img.shields.io/badge/WIN-27AE60?style=flat-square'/></td></tr>
@@ -113,8 +115,6 @@ const murat = {
 <tr><td><img src='https://ddragon.leagueoflegends.com/cdn/16.18.1/img/champion/TahmKench.png' width='28'/></td><td><b>TahmKench</b></td><td align='center'>1/15/4</td><td align='center'>0.3</td><td align='center'>16</td><td align='center'><img src='https://img.shields.io/badge/LOSS-E74C3C?style=flat-square'/></td></tr>
 <tr><td><img src='https://ddragon.leagueoflegends.com/cdn/16.18.1/img/champion/TahmKench.png' width='28'/></td><td><b>TahmKench</b></td><td align='center'>7/8/10</td><td align='center'>2.1</td><td align='center'>45</td><td align='center'><img src='https://img.shields.io/badge/WIN-27AE60?style=flat-square'/></td></tr>
 <tr><td><img src='https://ddragon.leagueoflegends.com/cdn/16.18.1/img/champion/Pantheon.png' width='28'/></td><td><b>Pantheon</b></td><td align='center'>7/16/5</td><td align='center'>0.8</td><td align='center'>42</td><td align='center'><img src='https://img.shields.io/badge/LOSS-E74C3C?style=flat-square'/></td></tr>
-<tr><td><img src='https://ddragon.leagueoflegends.com/cdn/16.18.1/img/champion/TahmKench.png' width='28'/></td><td><b>TahmKench</b></td><td align='center'>3/11/22</td><td align='center'>2.3</td><td align='center'>32</td><td align='center'><img src='https://img.shields.io/badge/WIN-27AE60?style=flat-square'/></td></tr>
-<tr><td><img src='https://ddragon.leagueoflegends.com/cdn/16.18.1/img/champion/Milio.png' width='28'/></td><td><b>Milio</b></td><td align='center'>1/3/14</td><td align='center'>5.0</td><td align='center'>19</td><td align='center'><img src='https://img.shields.io/badge/WIN-27AE60?style=flat-square'/></td></tr>
 </table>
 </details>
 <!---LOL-STATS-END-HERE--->
