@@ -6,7 +6,7 @@
 
 <p>
   <a href="https://www.linkedin.com/in/muratince89"><img src="https://img.shields.io/badge/linkedin-muratince89-555?style=flat-square&logo=linkedin&logoColor=white&labelColor=24292f" alt="LinkedIn"/></a>
-  <a href="https://ms-solutions.dev/?utm_source=github&utm_medium=profile"><img src="https://img.shields.io/badge/web-ms--solutions.dev-555?style=flat-square&labelColor=24292f" alt="ms-solutions.dev"/></a>
+  <a href="https://ms-solutions.dev/?utm_source=github&utm_medium=profile&utm_content=murat"><img src="https://img.shields.io/badge/web-ms--solutions.dev-555?style=flat-square&labelColor=24292f" alt="ms-solutions.dev"/></a>
 </p>
 
 <picture>
