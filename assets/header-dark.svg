@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="840" height="204" viewBox="0 0 840 204" role="img" aria-label="murat: sap developer by day, app and ai tinkerer by night">
+<style>
+text{font-family:ui-monospace, 'JetBrains Mono', SFMono-Regular, Menlo, Consolas, monospace;font-size:15px}
+.r0,.r1,.r2,.r3{transform-box:fill-box;transform-origin:left center}
+@keyframes tip{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes show{from{opacity:0}to{opacity:1}}
+@keyframes blink{50%{opacity:0}}
+.r0{animation:tip 0.45s steps(10,end) 0.30s both}.r1{animation:tip 2.52s steps(56,end) 1.20s both}.r2{animation:tip 0.54s steps(12,end) 4.17s both}.r3{animation:tip 2.56s steps(57,end) 5.16s both}.last{animation:show 0s 8.18s both}.cur{animation:blink 1s steps(1) 8.18s infinite}
+@media (prefers-reduced-motion:reduce){.r0,.r1,.r2,.r3,.last,.cur{animation:none}}
+</style>
+<defs><clipPath id="c0"><rect class="r0" x="28" y="27" width="97" height="23"/></clipPath><clipPath id="c1"><rect class="r1" x="28" y="59" width="525" height="23"/></clipPath><clipPath id="c2"><rect class="r2" x="28" y="91" width="116" height="23"/></clipPath><clipPath id="c3"><rect class="r3" x="28" y="123" width="534" height="23"/></clipPath></defs>
+<rect x="0.5" y="0.5" width="839" height="203" rx="6" fill="#0d1117" stroke="#30363d"/>
+<text x="28" y="42" clip-path="url(#c0)" xml:space="preserve"><tspan fill="#3fb950">~ $</tspan> <tspan fill="#e6edf3">whoami</tspan></text>
+<text x="28" y="74" clip-path="url(#c1)" xml:space="preserve"><tspan fill="#9198a1">murat · sap developer by day, app &amp; ai tinkerer by night</tspan></text>
+<text x="28" y="106" clip-path="url(#c2)" xml:space="preserve"><tspan fill="#3fb950">~ $</tspan> <tspan fill="#e6edf3">ls ~/now</tspan></text>
+<text x="28" y="138" clip-path="url(#c3)" xml:space="preserve"><tspan fill="#9198a1">akari/  salihiit/  jgl-diff/  m.sc.-applied-ai/  homelab/</tspan></text>
+<g class="last"><text x="28" y="170" fill="#3fb950">~ $</text><rect class="cur" x="65" y="157" width="9" height="17" fill="#3fb950"/></g>
+</svg>
