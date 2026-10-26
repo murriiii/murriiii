@@ -10,8 +10,8 @@ from xml.sax.saxutils import escape
 LINES = [
     ("~ $", "whoami"),
     (None, "murat · sap developer by day, app & ai tinkerer by night"),
-    ("~ $", "ls ~/now"),
-    (None, "akari/  salihiit/  jgl-diff/  m.sc.-applied-ai/  homelab/"),
+    ("~ $", "ls ~/coming-soon"),
+    (None, "akari/  salihiit/  jgl-diff/"),
 ]
 THEMES = {
     "dark": {"bg": "#0d1117", "rule": "#30363d", "fg": "#e6edf3", "dim": "#9198a1", "acc": "#3fb950"},
