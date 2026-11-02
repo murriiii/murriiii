@@ -1,0 +1,56 @@
+name: Update LoL Stats
+
+on:
+  schedule:
+    - cron: '0 6 * * *'
+  workflow_dispatch:
+    inputs:
+      source:
+        description: 'Data source'
+        required: true
+        default: 'db'
+        type: choice
+        options:
+          - db
+          - api
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: self-hosted
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup venv and install dependencies
+        run: |
+          python -m venv .venv
+          .venv/bin/pip install Pillow requests python-dotenv numpy imageio psycopg2-binary
+
+      - name: Update LoL stats
+        env:
+          API_KEY: ${{ secrets.API_KEY }}
+          RIOT_API_KEY: ${{ secrets.API_KEY }}
+          DB_HOST: ${{ secrets.DB_HOST }}
+          DB_PORT: ${{ secrets.DB_PORT }}
+          DB_NAME: lol_stats
+          DB_USER: ${{ secrets.DB_USER }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          DATA_SOURCE: ${{ inputs.source || 'db' }}
+        working-directory: scripts
+        run: |
+          if [ "$DATA_SOURCE" = "db" ]; then
+            ../.venv/bin/python lol_main.py --from-db
+          else
+            ../.venv/bin/python lol_main.py
+          fi
+
+      - name: Commit and push
+        run: |
+          git config --local user.email "49720203+murriiii@users.noreply.github.com"
+          git config --local user.name "murriiii"
+          git add -A
+          git diff-index --quiet HEAD || git commit -m "Update LoL stats"
+          git push

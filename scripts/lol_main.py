@@ -1,0 +1,644 @@
+from dotenv import load_dotenv
+import os
+import sys
+import json
+import pathlib
+from collections import Counter
+import shutil
+import data_dragon_functions as dd
+import riot_api_functions as rf
+import image_generation as ig
+import time
+import logging
+
+
+CACHE_DIR = pathlib.Path.home() / ".lol-cache"
+CACHE_FILE = CACHE_DIR / "matches.json"
+
+
+def load_cache():
+    if CACHE_FILE.exists():
+        with open(CACHE_FILE, "r", encoding="utf-8") as f:
+            return json.load(f)
+    return {"matches": {}}
+
+
+def save_cache(cache):
+    CACHE_DIR.mkdir(parents=True, exist_ok=True)
+    # Keep only last 300 matches to prevent unbounded growth
+    if len(cache["matches"]) > 300:
+        sorted_ids = sorted(cache["matches"].keys(), reverse=True)[:300]
+        cache["matches"] = {k: cache["matches"][k] for k in sorted_ids}
+    with open(CACHE_FILE, "w", encoding="utf-8") as f:
+        json.dump(cache, f, indent=2)
+
+
+def fetch_match_participant(region_name, puuid, api_key, match_id, cache):
+    """Get participant data for a match, using cache if available."""
+    if match_id in cache["matches"]:
+        return cache["matches"][match_id], False
+
+    response = rf.get_match_data(region_name, match_id, api_key)
+    for p in response["info"]["participants"]:
+        if p["puuid"] == puuid:
+            data = {
+                "championName": p["championName"],
+                "kills": p["kills"],
+                "deaths": p["deaths"],
+                "assists": p["assists"],
+                "win": p["win"],
+                "totalMinionsKilled": p.get("totalMinionsKilled", 0),
+                "neutralMinionsKilled": p.get("neutralMinionsKilled", 0),
+                "individualPosition": p["individualPosition"],
+                "timeCCingOthers": p["timeCCingOthers"],
+                "abilityUses": p.get("challenges", {}).get("abilityUses", 0),
+                "soloKills": p.get("challenges", {}).get("soloKills", 0),
+                "takedowns": p.get("challenges", {}).get("takedowns", 0),
+                "pentaKills": p["pentaKills"],
+                "quadraKills": p["quadraKills"],
+                "tripleKills": p["tripleKills"],
+                "doubleKills": p["doubleKills"],
+            }
+            cache["matches"][match_id] = data
+            return data, True
+    return None, True
+
+
+'''
+Given a string, replaces the API Key with stars to preventing leaking.
+
+Paramters:
+- message -- string possibly containing api_key
+- api_key -- API Key to wipe
+
+Returns:
+- result -- string that replaces api_key with stars
+'''
+def wipe_api_key(message, api_key):
+    return message.replace(api_key, "********")
+
+
+'''
+Creates an ASCII percentage bar given a percentage.
+
+Parameters:
+- percentage -- requested percentage to make a percentage bar of.
+
+Returns:
+- out -- A string percentage bar which is 25 characters long.
+'''
+def create_loading_bar(percentage):
+    bars = int((percentage / 100) * 25)
+    out = "|"
+    for x in range(25):
+        if x <= bars:
+            out = out + "█"
+        else:
+            out = out + "-"
+    out = out + "|"
+    return out
+
+
+
+'''
+Copies all the contents of a source file and puts if in between special indicators in the target file.
+The indicators used are:
+
+"<!---LOL-STATS-START-HERE--->\n" for the start and "<!---LOL-STATS-END-HERE--->\n" for the end
+
+
+Parameters:
+- target_file -- file that contains the location to have content copied to.
+- source_file -- file that contains information to be copied.
+
+Returns: None
+'''
+def copy_file_contents_to_destination(target_file, source_file):
+    # Open the the actual destination
+    final_file_lines = open(target_file, encoding='utf-8').readlines()
+    readme_lol_stats_file = open(source_file, encoding='utf-8').readlines()
+    # Parse target file to see where to put widget (use FIRST markers only)
+    start_pos = -1
+    end_pos = -1
+    for pos, line in enumerate(final_file_lines):
+        if "<!---LOL-STATS-START-HERE--->" in line and start_pos == -1:
+            start_pos = pos
+        elif "<!---LOL-STATS-END-HERE--->" in line and end_pos == -1:
+            end_pos = pos
+    if start_pos == -1 or end_pos == -1:
+        print("WARNING: Could not find LOL-STATS markers in README")
+        return
+    # Format everything
+    start = final_file_lines[:start_pos+1]
+    end = final_file_lines[end_pos:]
+    start.extend(readme_lol_stats_file)
+    start.extend(end)
+    # Write to target file
+    with open(target_file, "w", encoding="utf-8") as f:
+        for line in start:
+            f.write(line)
+
+
+
+
+def last_played_champ_squares(list_of_champs):
+    dd.get_champ_images(list_of_champs, "square_champs")
+    result = ""
+    for champ in list_of_champs:
+        shutil.copyfile(f'square_champs/{champ}.png', f"../readme-lol-items/{champ}.png")
+        result = f"{result}<img src='readme-lol-items/{champ}.png' alt='drawing' width='20'/>  "
+    return result
+
+
+'''
+Creates data widget and copies it to the target file.
+
+Parameters:
+- target_file -- file to copy data to.
+- temp_file -- name of temporary file to create to store data.
+- config -- parsed json of "config.json".
+- global_data -- data that applies to all current (and future) widgets such as total matches looked at.
+- main_widget_info -- all information that pertains to the main widget (left most) in dictionary form.
+- mastery_widget_info -- all information that pertains to the mastery widget (right most) in dictionary form.
+
+Returns: None
+'''
+def create_played_and_recent_widget(target_file, temp_file, config, global_data, main_widget_info, mastery_widget_info):
+
+    list_of_messages = []
+
+
+     # Write the actual display content to a temporary file
+    with open(temp_file, "w", encoding="utf-8") as f:
+        f.write(f"<h3 align='center'>i know i'm a noob, but even a noob has pride :D - {config['Summoner Name']}</h3>")
+        f.write(f"<table align='center'><tr></tr>\n")
+
+        # Lane Distribution (left side)
+        lane_dist = main_widget_info["Extra"].get("Lane Distribution", {})
+        sorted_lanes = sorted(lane_dist.items(), key=lambda x: x[1], reverse=True)
+
+        f.write(f"<tr align='left'><th><pre>Lane Distribution (Last {global_data['Total Matches']} Games)\n-------------------------\n")
+
+        for lane_name, percentage in sorted_lanes:
+            safe_name = lane_name.replace(" ", "_")
+            ig.create_lane_loading_bar(lane_name, percentage, f"../readme-lol-items/loading_{safe_name}.gif")
+            f.write(f"<img src='readme-lol-items/loading_{safe_name}.gif' alt='drawing' width='400'/>\n")
+
+        f.write(f"-------------------------\n")
+        
+
+
+
+
+        # Main Window Extra Info
+        if config["Extra Info"].get("Seconds of CC"):
+            cc = main_widget_info["Extra"]["Seconds of CC"]
+            list_of_messages.append(f"Seconds CCing Enemies: {cc}")
+        
+        if config["Extra Info"].get("Display Rank"):
+            if main_widget_info["Extra"]["Rank"] != "Unranked":
+                rank = main_widget_info["Extra"]["Rank"].title()
+                shutil.copyfile(f'rank_images/Rank={rank}.png', f'../readme-lol-items/Solo-Duo-Rank.png')
+                list_of_messages.append(f"Current Rank: {rank}")
+
+        if config["Extra Info"].get("Main Lane"):
+            position = main_widget_info["Extra"]["Most Played Position"]
+            common_names = {"TOP": "Top", "JUNGLE": "Jungle", "MIDDLE": "Middle", "BOTTOM": "Bottom", "UTILITY": "Support", "ARAM": "Aram"}
+            file_names = {"TOP": "Top", "JUNGLE": "Jungle", "MIDDLE": "Mid", "BOTTOM": "Bot", "UTILITY": "Support"}
+            rank = main_widget_info["Extra"]["Rank"][0] + main_widget_info["Extra"]["Rank"][1:].lower()
+            if position == "ARAM":
+                list_of_messages.append(f"Most Played Position: {common_names[position]}")
+            else:
+                list_of_messages.append(f"Most Played Position: {common_names[position]}")
+
+        if config["Extra Info"].get("Ability Count"):
+            count = main_widget_info["Extra"]["Ability Count"]
+            list_of_messages.append(f"Total Abilities Used: {count}")
+
+        if config["Extra Info"].get("Solokills"):
+            solokills = main_widget_info["Extra"]["Solokills"]
+            list_of_messages.append(f"Total Solokills: {solokills}")
+        
+        if config["Extra Info"].get("Takedowns"):
+            take_downs = main_widget_info["Extra"]["Takedowns"]
+            list_of_messages.append(f"Total Takedowns: {take_downs}")
+        
+        if config["Extra Info"].get("K/D/A"):
+            list_of_messages.append(f"KDA: {main_widget_info['Extra']['Kills']}/{main_widget_info['Extra']['Deaths']}/{main_widget_info['Extra']['Assists']}")
+        if config["Extra Info"].get("Pentakills"):
+            list_of_messages.append(f"Pentakills: {main_widget_info['Extra']['Pentakills']}")
+
+        if config["Extra Info"].get("Quadrakills"):
+            list_of_messages.append(f"Quadrakills: {main_widget_info['Extra']['Quadrakills']}")
+
+        if config["Extra Info"].get("Triplekills"):
+            list_of_messages.append(f"Triplekills: {main_widget_info['Extra']['Triplekills']}")
+
+        if config["Extra Info"].get("Doublekills"):
+            list_of_messages.append(f"Doublekills: {main_widget_info['Extra']['Doublekills']}")
+
+
+
+        ig.create_extra_info(list_of_messages, "../readme-lol-items/extra_info.gif")
+        f.write(f"<img align='center' src='readme-lol-items/extra_info.gif' alt='drawing' width='350'/>")
+        f.write("</pre></th>")
+        # End main section
+
+
+        # Mastery Section Info
+        if config["Extra Info"].get("Mastery"):
+
+            
+            f.write(f"<th><pre>Top 3 Champion Masteries\n------------------------\n")
+
+            images = [x for x in mastery_widget_info['Top Three Data']]
+            ig.create_mastery_gif(f'loading_images/{images[0][1]}.png',
+            f'loading_images/{images[1][1]}.png', f'loading_images/{images[2][1]}.png',
+            f'{images[0][0]}: {images[0][2]:,}', f'{images[1][0]}: {images[1][2]:,}', f'{images[2][0]}: {images[2][2]:,}', '../readme-lol-items/mastery.gif')
+            f.write(f"<img align='center' src='readme-lol-items/mastery.gif' alt='drawing' width='320'/> ")
+
+            # '''
+            # NO GIF CODE
+            # '''
+            # for champ in mastery_widget_info['Top Three Data']:
+            #     shutil.copyfile(f'loading_images/{champ[1]}.png', f'../readme-lol-items/{champ[1]}.png')
+            #     f.write(f"<img align='center' src='readme-lol-items/{champ[1]}.png' alt='drawing' width='50'/> ")
+            #     f.write(f"{champ[0]}: {champ[2]} \n")
+            
+
+            f.write(f"</pre></th>")
+
+            
+        f.write(f"</tr></table>\n")
+
+        
+
+        # Recent Match History Table (last 10 only)
+        match_details = main_widget_info.get("Extra", {}).get("Match Details", [])[:10]
+        if match_details:
+            version = dd.get_version()
+            f.write(f"\n<details>\n<summary><h4 align='center'>Recent Matches</h4></summary>\n")
+            f.write(f"<table align='center'>\n")
+            f.write(f"<tr><th></th><th>Champion</th><th>K/D/A</th><th>KDA</th><th>CS</th><th>Result</th></tr>\n")
+            for m in match_details:
+                k, d, a = m["kills"], m["deaths"], m["assists"]
+                kda = (k + a) / max(d, 1)
+                cs = m["cs"]
+                champ = m["champion"]
+                if m["win"]:
+                    result = "<img src='https://img.shields.io/badge/WIN-27AE60?style=flat-square'/>"
+                else:
+                    result = "<img src='https://img.shields.io/badge/LOSS-E74C3C?style=flat-square'/>"
+                icon = f"https://ddragon.leagueoflegends.com/cdn/{version}/img/champion/{champ}.png"
+                f.write(f"<tr><td><img src='{icon}' width='28'/></td>")
+                f.write(f"<td><b>{champ}</b></td>")
+                f.write(f"<td align='center'>{k}/{d}/{a}</td>")
+                f.write(f"<td align='center'>{kda:.1f}</td>")
+                f.write(f"<td align='center'>{cs}</td>")
+                f.write(f"<td align='center'>{result}</td></tr>\n")
+            f.write(f"</table>\n</details>\n")
+
+
+        if config.get("Toggle Credit"):
+            f.write("<h6 align='center'>\n\n")
+            f.write("[README Profile LoL Stats](https://github.com/marketplace/actions/readme-profile-lol-stats) by [rithikasiilva](https://github.com/rithikasilva)\n")
+            f.write("</h6>\n")
+
+
+    # Copy the generated widget to the correct file and delete temporary file
+    copy_file_contents_to_destination(target_file, temp_file)
+    os.remove(temp_file)
+
+
+    
+'''
+Generates data for the main section.
+
+Parameters:
+- region_name -- regional value name for summoner
+- puuid -- puuid of requested summoner to look at.
+- api_key -- Riot API key with general access.
+- extra_data -- dictionary to populate all text based information found at the bottom of the main widget with.
+- list_of_matches -- list of match id's to gather data from
+
+Returns:
+- dictionary in the format: {"Most Played": recent_most_played, "Percentages": played_percentage, "Extra": extra_data} where
+recent_most_played is a list of champion names in order of most played recently, played_percentage is a dictionary with champion names and
+what percentage of matches they were played recently, and extra_data (from the parameters).
+'''
+def get_main_section_data(region_name, puuid, api_key, extra_data, list_of_matches, cache):
+    # Generate a list of champions that I played in the last x matches
+    last_champs_played = []
+    played_positions = []
+    match_details = []
+
+    time_ccing = 0
+    ability_usage = 0
+    solo_kills = 0
+    take_downs = 0
+
+    global_kills = 0
+    global_deaths = 0
+    global_assists = 0
+
+    pentakills = 0
+    quadrakills = 0
+    triplekills = 0
+    doublekills = 0
+
+    cached_count = 0
+
+    for match_id in list_of_matches:
+        participant, was_fetched = fetch_match_participant(region_name, puuid, api_key, match_id, cache)
+        if participant is None:
+            continue
+        if not was_fetched:
+            cached_count += 1
+
+        last_champs_played.append(participant["championName"])
+
+        match_details.append({
+            "champion": participant["championName"],
+            "kills": participant["kills"],
+            "deaths": participant["deaths"],
+            "assists": participant["assists"],
+            "win": participant["win"],
+            "cs": participant["totalMinionsKilled"] + participant["neutralMinionsKilled"],
+        })
+
+        played_positions.append(participant["individualPosition"])
+        time_ccing += participant["timeCCingOthers"]
+        ability_usage += participant["abilityUses"]
+        solo_kills += participant["soloKills"]
+        take_downs += participant["takedowns"]
+
+        global_kills += participant["kills"]
+        global_deaths += participant["deaths"]
+        global_assists += participant["assists"]
+
+        pentakills += participant["pentaKills"]
+        quadrakills += participant["quadraKills"]
+        triplekills += participant["tripleKills"]
+        doublekills += participant["doubleKills"]
+
+        if was_fetched:
+            time.sleep(1.5)
+
+    print(f"Matches: {len(list_of_matches)} total, {cached_count} from cache, {len(list_of_matches) - cached_count} fetched")
+
+
+    extra_data["Takedowns"] = take_downs
+    extra_data["Solokills"] = solo_kills
+    extra_data["Ability Count"] = ability_usage
+    extra_data["Most Played Position"] = max(set(played_positions), key=played_positions.count)
+    if extra_data["Most Played Position"] == "Invalid": extra_data["Most Played Position"] = "ARAM"
+    extra_data["Seconds of CC"] = time_ccing
+
+    extra_data["Kills"] = global_kills
+    extra_data["Deaths"] = global_deaths
+    extra_data["Assists"] = global_assists
+
+    extra_data["Pentakills"] = pentakills
+    extra_data["Quadrakills"] = quadrakills
+    extra_data["Triplekills"] = triplekills
+    extra_data["Doublekills"] = doublekills
+
+    extra_data["Last Played Champs"] = last_champs_played
+    extra_data["Match Details"] = match_details
+
+    # Lane distribution
+    lane_names = {"TOP": "Top", "JUNGLE": "Jungle", "MIDDLE": "Mid", "BOTTOM": "Bot", "UTILITY": "Support", "Invalid": "ARAM"}
+    lane_counts = Counter(played_positions)
+    total_games = len(played_positions)
+    lane_percentages = {}
+    for pos, count in lane_counts.items():
+        display_name = lane_names.get(pos, pos)
+        lane_percentages[display_name] = (count / total_games) * 100
+    extra_data["Lane Distribution"] = lane_percentages
+
+    # Generates the information for the 5 most played champions
+    total_length = len(last_champs_played)
+    played_percentage = Counter(last_champs_played)
+    for key_counts in played_percentage:
+        played_percentage[key_counts] = (played_percentage[key_counts] / total_length) * 100
+    recent_most_played = sorted(played_percentage, key=played_percentage.get, reverse=True)[:5]
+
+
+    return {"Most Played": recent_most_played, "Percentages": played_percentage, "Extra": extra_data}
+
+
+
+
+
+'''
+Generate data for the mastery section.
+
+Parameters:
+- region_code -- platform code for region summoner belongs to
+- id -- id of the summoner to get mastery information for.
+- api_key -- Riot API key with general access.
+
+Returns:
+- a dictionary which contains a list of lists. The lowests lists contain each champions name, their loading image title, and their mastery score.
+'''
+def get_mastery_section_data(region_code, puuid, api_key):
+    # Get mastery information
+    champ_id_points = rf.get_masteries(region_code, puuid, api_key)
+    champ_data = dd.get_champion_data()
+
+    for id in champ_id_points:
+        for champ in champ_data:
+            if int(champ_data[champ]["key"]) == int(id["championId"]):
+                id["champName"] = champ_data[champ]["name"]
+                break
+
+    list_masteries = [[x["champName"], x["championPoints"]] for x in champ_id_points][:3]
+    mastery_info = [[x[0], dd.get_loading_image(x[0], "loading_images"), x[1]] for x in list_masteries]
+    return {"Top Three Data": mastery_info}
+
+
+
+
+
+
+
+
+def get_data_from_db(config):
+    """Read all match/mastery/summoner data from PostgreSQL. Zero API calls."""
+    import psycopg2
+
+    conn = psycopg2.connect(
+        host=os.getenv("DB_HOST", "localhost"),
+        port=os.getenv("DB_PORT", "5432"),
+        dbname=os.getenv("DB_NAME", "lol_stats"),
+        user=os.getenv("DB_USER", "postgres"),
+        password=os.getenv("DB_PASSWORD", ""),
+    )
+
+    total_matches = config.get("Matches", 100)
+
+    with conn.cursor() as cur:
+        # Get summoner info
+        cur.execute("SELECT tier FROM lol_summoner LIMIT 1")
+        row = cur.fetchone()
+        rank_tier = row[0] if row else "Unranked"
+
+        # Get last N matches
+        cur.execute("""
+            SELECT champion_name, kills, deaths, assists, win,
+                   total_minions_killed, neutral_minions_killed, position,
+                   time_ccing_others, ability_uses, solo_kills, takedowns,
+                   penta_kills, quadra_kills, triple_kills, double_kills
+            FROM lol_matches ORDER BY game_start_ts DESC LIMIT %s
+        """, (total_matches,))
+        matches = cur.fetchall()
+
+        # Get top 3 masteries
+        cur.execute("""
+            SELECT champion_name, champion_id, champion_points
+            FROM lol_mastery ORDER BY champion_points DESC LIMIT 3
+        """)
+        masteries = cur.fetchall()
+
+    conn.close()
+
+    # Build the same data structures as the API-based functions
+    extra_data = {"Rank": rank_tier}
+    last_champs = []
+    played_positions = []
+    match_details = []
+    time_ccing = ability_usage = solo_kills = take_downs = 0
+    global_kills = global_deaths = global_assists = 0
+    pentakills = quadrakills = triplekills = doublekills = 0
+
+    for m in matches:
+        champ, k, d, a, win, minions, neutrals, pos, cc, abilities, solos, td, penta, quadra, triple, double = m
+        last_champs.append(champ)
+        match_details.append({"champion": champ, "kills": k, "deaths": d, "assists": a, "win": win, "cs": minions + neutrals})
+        played_positions.append(pos)
+        time_ccing += cc
+        ability_usage += abilities
+        solo_kills += solos
+        take_downs += td
+        global_kills += k
+        global_deaths += d
+        global_assists += a
+        pentakills += penta
+        quadrakills += quadra
+        triplekills += triple
+        doublekills += double
+
+    extra_data["Takedowns"] = take_downs
+    extra_data["Solokills"] = solo_kills
+    extra_data["Ability Count"] = ability_usage
+    if played_positions:
+        extra_data["Most Played Position"] = max(set(played_positions), key=played_positions.count)
+        if extra_data["Most Played Position"] == "Invalid":
+            extra_data["Most Played Position"] = "ARAM"
+    else:
+        extra_data["Most Played Position"] = "N/A"
+    extra_data["Seconds of CC"] = time_ccing
+    extra_data["Kills"] = global_kills
+    extra_data["Deaths"] = global_deaths
+    extra_data["Assists"] = global_assists
+    extra_data["Pentakills"] = pentakills
+    extra_data["Quadrakills"] = quadrakills
+    extra_data["Triplekills"] = triplekills
+    extra_data["Doublekills"] = doublekills
+    extra_data["Last Played Champs"] = last_champs
+    extra_data["Match Details"] = match_details
+
+    # Lane distribution
+    lane_names = {"TOP": "Top", "JUNGLE": "Jungle", "MIDDLE": "Mid", "BOTTOM": "Bot", "UTILITY": "Support", "Invalid": "ARAM"}
+    lane_counts = Counter(played_positions)
+    total_games = len(played_positions)
+    lane_percentages = {}
+    for pos, count in lane_counts.items():
+        display_name = lane_names.get(pos, pos)
+        lane_percentages[display_name] = (count / total_games) * 100 if total_games else 0
+    extra_data["Lane Distribution"] = lane_percentages
+
+    total_length = len(last_champs)
+    played_percentage = Counter(last_champs)
+    for key_counts in played_percentage:
+        played_percentage[key_counts] = (played_percentage[key_counts] / total_length) * 100 if total_length else 0
+    recent_most_played = sorted(played_percentage, key=played_percentage.get, reverse=True)[:5]
+
+    main_widget_info = {"Most Played": recent_most_played, "Percentages": played_percentage, "Extra": extra_data}
+
+    # Mastery info - download loading images
+    os.makedirs("loading_images", exist_ok=True)
+    mastery_info = []
+    for champ_name, champ_id, points in masteries:
+        loading_title = dd.get_loading_image(champ_name, "loading_images")
+        mastery_info.append([champ_name, loading_title, points])
+    mastery_widget_info = {"Top Three Data": mastery_info}
+
+    global_data = {"Total Matches": len(matches)}
+    print(f"DB: loaded {len(matches)} matches, rank={rank_tier}, top mastery={masteries[0][0] if masteries else 'N/A'}")
+
+    return global_data, main_widget_info, mastery_widget_info
+
+
+def main():
+    logging.basicConfig()
+    logging.basicConfig(format='%(message)s')
+    log = logging.getLogger(__name__)
+    key = None
+    try:
+        # Ensure required directories exist
+        os.makedirs("loading_images", exist_ok=True)
+        os.makedirs("square_champs", exist_ok=True)
+        os.makedirs("../readme-lol-items", exist_ok=True)
+
+        for item in os.listdir("../readme-lol-items"):
+            if item.endswith(".png") or item.endswith(".gif"):
+                os.remove(os.path.join("../readme-lol-items", item))
+
+        load_dotenv()
+        config = json.load(open("../readme-lol-items/config.json"))
+        use_db = "--from-db" in sys.argv
+
+        if use_db:
+            print("Reading data from PostgreSQL...")
+            global_data, main_widget_info, mastery_widget_info = get_data_from_db(config)
+        else:
+            print("Reading data from Riot API...")
+            key = os.getenv("API_KEY") or os.getenv("RIOT_API_KEY")
+            total_matches_to_look = max(1, min(abs(config.get("Matches", 10)), 100))
+
+            cache = load_cache()
+            print(f"Cache loaded: {len(cache['matches'])} matches cached")
+
+            name = config["Summoner Name"]
+            region_code = config["Platform Routing Region Code"]
+            region_name = config["Regional Routing Name"]
+            _id, puuid = rf.get_summoner_identifiers(region_code, name, key, region_name)
+            rank_data = rf.get_summoner_rank(region_code, puuid, key)
+
+            extra_data = {"Rank": rank_data["tier"]}
+            global_data = {"Total Matches": total_matches_to_look}
+
+            matches = rf.get_summoners_matches(region_name, puuid, key, 0, total_matches_to_look)
+            main_widget_info = get_main_section_data(region_name, puuid, key, extra_data, matches, cache)
+            mastery_widget_info = get_mastery_section_data(region_code, puuid, key)
+
+            save_cache(cache)
+            print(f"Cache saved: {len(cache['matches'])} matches cached")
+
+        target_file = "../" + config["Target File"]
+        temp_file = "readme_lol_stats.md"
+        create_played_and_recent_widget(target_file, temp_file, config, global_data, main_widget_info, mastery_widget_info)
+        print("Finished")
+
+    except FileNotFoundError as e:
+        log.warning('File not found. Ensure correct directory structure and files exist.')
+        log.warning(e)
+    except rf.RiotApiBadRequest as e:
+        log.warning(f'{wipe_api_key(str(e), key or "")}')
+    except Exception as e:
+        log.warning(f'{e}')
+
+
+if __name__ == "__main__":
+    main()
