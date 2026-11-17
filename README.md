@@ -62,6 +62,8 @@ infra        docker · linux · postgres · redis · cloudflare
 <summary><h4 align='center'>Recent Matches</h4></summary>
 <table align='center'>
 <tr><th></th><th>Champion</th><th>K/D/A</th><th>KDA</th><th>CS</th><th>Result</th></tr>
+<tr><td><img src='https://ddragon.leagueoflegends.com/cdn/16.22.1/img/champion/Teemo.png' width='28'/></td><td><b>Teemo</b></td><td align='center'>7/15/16</td><td align='center'>1.5</td><td align='center'>198</td><td align='center'><img src='https://img.shields.io/badge/WIN-27AE60?style=flat-square'/></td></tr>
+<tr><td><img src='https://ddragon.leagueoflegends.com/cdn/16.22.1/img/champion/Pantheon.png' width='28'/></td><td><b>Pantheon</b></td><td align='center'>9/12/8</td><td align='center'>1.4</td><td align='center'>166</td><td align='center'><img src='https://img.shields.io/badge/LOSS-E74C3C?style=flat-square'/></td></tr>
 <tr><td><img src='https://ddragon.leagueoflegends.com/cdn/16.22.1/img/champion/Urgot.png' width='28'/></td><td><b>Urgot</b></td><td align='center'>7/6/3</td><td align='center'>1.7</td><td align='center'>253</td><td align='center'><img src='https://img.shields.io/badge/LOSS-E74C3C?style=flat-square'/></td></tr>
 <tr><td><img src='https://ddragon.leagueoflegends.com/cdn/16.22.1/img/champion/Urgot.png' width='28'/></td><td><b>Urgot</b></td><td align='center'>7/6/3</td><td align='center'>1.7</td><td align='center'>144</td><td align='center'><img src='https://img.shields.io/badge/WIN-27AE60?style=flat-square'/></td></tr>
 <tr><td><img src='https://ddragon.leagueoflegends.com/cdn/16.22.1/img/champion/Teemo.png' width='28'/></td><td><b>Teemo</b></td><td align='center'>1/5/8</td><td align='center'>1.8</td><td align='center'>244</td><td align='center'><img src='https://img.shields.io/badge/WIN-27AE60?style=flat-square'/></td></tr>
@@ -70,8 +72,6 @@ infra        docker · linux · postgres · redis · cloudflare
 <tr><td><img src='https://ddragon.leagueoflegends.com/cdn/16.22.1/img/champion/Pantheon.png' width='28'/></td><td><b>Pantheon</b></td><td align='center'>8/10/4</td><td align='center'>1.2</td><td align='center'>144</td><td align='center'><img src='https://img.shields.io/badge/WIN-27AE60?style=flat-square'/></td></tr>
 <tr><td><img src='https://ddragon.leagueoflegends.com/cdn/16.22.1/img/champion/Malzahar.png' width='28'/></td><td><b>Malzahar</b></td><td align='center'>2/13/6</td><td align='center'>0.6</td><td align='center'>180</td><td align='center'><img src='https://img.shields.io/badge/LOSS-E74C3C?style=flat-square'/></td></tr>
 <tr><td><img src='https://ddragon.leagueoflegends.com/cdn/16.22.1/img/champion/Pantheon.png' width='28'/></td><td><b>Pantheon</b></td><td align='center'>5/10/5</td><td align='center'>1.0</td><td align='center'>42</td><td align='center'><img src='https://img.shields.io/badge/LOSS-E74C3C?style=flat-square'/></td></tr>
-<tr><td><img src='https://ddragon.leagueoflegends.com/cdn/16.22.1/img/champion/Milio.png' width='28'/></td><td><b>Milio</b></td><td align='center'>2/11/24</td><td align='center'>2.4</td><td align='center'>32</td><td align='center'><img src='https://img.shields.io/badge/WIN-27AE60?style=flat-square'/></td></tr>
-<tr><td><img src='https://ddragon.leagueoflegends.com/cdn/16.22.1/img/champion/Pantheon.png' width='28'/></td><td><b>Pantheon</b></td><td align='center'>13/11/20</td><td align='center'>3.0</td><td align='center'>53</td><td align='center'><img src='https://img.shields.io/badge/WIN-27AE60?style=flat-square'/></td></tr>
 </table>
 </details>
 <!---LOL-STATS-END-HERE--->
