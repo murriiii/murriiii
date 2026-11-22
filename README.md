@@ -41,7 +41,7 @@ infra        docker · linux · postgres · redis · cloudflare
 
 ---
 
-<details>
+<details open>
 <summary><b><code>> after hours</code></b> · league of legends</summary>
 
 <!---LOL-STATS-START-HERE--->
@@ -58,7 +58,7 @@ infra        docker · linux · postgres · redis · cloudflare
 ------------------------
 <img align='center' src='readme-lol-items/mastery.gif' alt='drawing' width='320'/> </pre></th></tr></table>
 
-<details>
+<details open>
 <summary><h4 align='center'>Recent Matches</h4></summary>
 <table align='center'>
 <tr><th></th><th>Champion</th><th>K/D/A</th><th>KDA</th><th>CS</th><th>Result</th></tr>

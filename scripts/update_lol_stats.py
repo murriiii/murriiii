@@ -196,7 +196,7 @@ def build_readme_section(summoner, ranked_entries, masteries, matches, puuid):
 {champ_cells}</tr>
 </table>
 
-<details>
+<details open>
 <summary align="center"><b>Recent Matches</b></summary>
 <br/>
 <table align="center">

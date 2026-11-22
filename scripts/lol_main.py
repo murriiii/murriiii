@@ -277,7 +277,7 @@ def create_played_and_recent_widget(target_file, temp_file, config, global_data,
         match_details = main_widget_info.get("Extra", {}).get("Match Details", [])[:10]
         if match_details:
             version = dd.get_version()
-            f.write(f"\n<details>\n<summary><h4 align='center'>Recent Matches</h4></summary>\n")
+            f.write(f"\n<details open>\n<summary><h4 align='center'>Recent Matches</h4></summary>\n")
             f.write(f"<table align='center'>\n")
             f.write(f"<tr><th></th><th>Champion</th><th>K/D/A</th><th>KDA</th><th>CS</th><th>Result</th></tr>\n")
             for m in match_details:
