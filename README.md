@@ -51,6 +51,7 @@ infra        docker · linux · postgres · redis · cloudflare
 <img src='readme-lol-items/loading_Top.gif' alt='drawing' width='400'/>
 <img src='readme-lol-items/loading_Support.gif' alt='drawing' width='400'/>
 <img src='readme-lol-items/loading_ARAM.gif' alt='drawing' width='400'/>
+<img src='readme-lol-items/loading_Bot.gif' alt='drawing' width='400'/>
 <img src='readme-lol-items/loading_Mid.gif' alt='drawing' width='400'/>
 <img src='readme-lol-items/loading_Jungle.gif' alt='drawing' width='400'/>
 -------------------------
@@ -62,6 +63,9 @@ infra        docker · linux · postgres · redis · cloudflare
 <summary><h4 align='center'>Recent Matches</h4></summary>
 <table align='center'>
 <tr><th></th><th>Champion</th><th>K/D/A</th><th>KDA</th><th>CS</th><th>Result</th></tr>
+<tr><td><img src='https://ddragon.leagueoflegends.com/cdn/16.23.1/img/champion/Illaoi.png' width='28'/></td><td><b>Illaoi</b></td><td align='center'>7/10/6</td><td align='center'>1.3</td><td align='center'>192</td><td align='center'><img src='https://img.shields.io/badge/WIN-27AE60?style=flat-square'/></td></tr>
+<tr><td><img src='https://ddragon.leagueoflegends.com/cdn/16.23.1/img/champion/Urgot.png' width='28'/></td><td><b>Urgot</b></td><td align='center'>6/12/9</td><td align='center'>1.2</td><td align='center'>335</td><td align='center'><img src='https://img.shields.io/badge/WIN-27AE60?style=flat-square'/></td></tr>
+<tr><td><img src='https://ddragon.leagueoflegends.com/cdn/16.23.1/img/champion/MissFortune.png' width='28'/></td><td><b>MissFortune</b></td><td align='center'>17/8/15</td><td align='center'>4.0</td><td align='center'>207</td><td align='center'><img src='https://img.shields.io/badge/WIN-27AE60?style=flat-square'/></td></tr>
 <tr><td><img src='https://ddragon.leagueoflegends.com/cdn/16.23.1/img/champion/Vayne.png' width='28'/></td><td><b>Vayne</b></td><td align='center'>6/8/9</td><td align='center'>1.9</td><td align='center'>143</td><td align='center'><img src='https://img.shields.io/badge/LOSS-E74C3C?style=flat-square'/></td></tr>
 <tr><td><img src='https://ddragon.leagueoflegends.com/cdn/16.23.1/img/champion/Naafiri.png' width='28'/></td><td><b>Naafiri</b></td><td align='center'>15/8/3</td><td align='center'>2.2</td><td align='center'>241</td><td align='center'><img src='https://img.shields.io/badge/WIN-27AE60?style=flat-square'/></td></tr>
 <tr><td><img src='https://ddragon.leagueoflegends.com/cdn/16.23.1/img/champion/Urgot.png' width='28'/></td><td><b>Urgot</b></td><td align='center'>9/8/4</td><td align='center'>1.6</td><td align='center'>204</td><td align='center'><img src='https://img.shields.io/badge/LOSS-E74C3C?style=flat-square'/></td></tr>
@@ -69,9 +73,6 @@ infra        docker · linux · postgres · redis · cloudflare
 <tr><td><img src='https://ddragon.leagueoflegends.com/cdn/16.23.1/img/champion/Teemo.png' width='28'/></td><td><b>Teemo</b></td><td align='center'>2/4/2</td><td align='center'>1.0</td><td align='center'>160</td><td align='center'><img src='https://img.shields.io/badge/LOSS-E74C3C?style=flat-square'/></td></tr>
 <tr><td><img src='https://ddragon.leagueoflegends.com/cdn/16.23.1/img/champion/Urgot.png' width='28'/></td><td><b>Urgot</b></td><td align='center'>12/12/3</td><td align='center'>1.2</td><td align='center'>217</td><td align='center'><img src='https://img.shields.io/badge/WIN-27AE60?style=flat-square'/></td></tr>
 <tr><td><img src='https://ddragon.leagueoflegends.com/cdn/16.23.1/img/champion/Urgot.png' width='28'/></td><td><b>Urgot</b></td><td align='center'>4/11/10</td><td align='center'>1.3</td><td align='center'>234</td><td align='center'><img src='https://img.shields.io/badge/WIN-27AE60?style=flat-square'/></td></tr>
-<tr><td><img src='https://ddragon.leagueoflegends.com/cdn/16.23.1/img/champion/Teemo.png' width='28'/></td><td><b>Teemo</b></td><td align='center'>4/12/0</td><td align='center'>0.3</td><td align='center'>222</td><td align='center'><img src='https://img.shields.io/badge/LOSS-E74C3C?style=flat-square'/></td></tr>
-<tr><td><img src='https://ddragon.leagueoflegends.com/cdn/16.23.1/img/champion/Naafiri.png' width='28'/></td><td><b>Naafiri</b></td><td align='center'>12/3/3</td><td align='center'>5.0</td><td align='center'>191</td><td align='center'><img src='https://img.shields.io/badge/WIN-27AE60?style=flat-square'/></td></tr>
-<tr><td><img src='https://ddragon.leagueoflegends.com/cdn/16.23.1/img/champion/Urgot.png' width='28'/></td><td><b>Urgot</b></td><td align='center'>1/9/2</td><td align='center'>0.3</td><td align='center'>157</td><td align='center'><img src='https://img.shields.io/badge/LOSS-E74C3C?style=flat-square'/></td></tr>
 </table>
 </details>
 <!---LOL-STATS-END-HERE--->
